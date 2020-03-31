@@ -47,7 +47,7 @@ def sample_long_running_recognize(storage_uri):
     sample_rate_hertz = 16000
 
     # The language of the supplied audio
-    language_code = "en-US"
+    language_code = "ja-JP"
 
     # Encoding of audio data sent. This sample sets this explicitly.
     # This field is optional for FLAC and WAV audio formats.
@@ -55,6 +55,8 @@ def sample_long_running_recognize(storage_uri):
     config = {
         "sample_rate_hertz": sample_rate_hertz,
         "language_code": language_code,
+        "enable_word_time_offsets": True,
+        "enable_automatic_punctuation": True,
         "encoding": encoding,
     }
     audio = {"uri": storage_uri}
@@ -68,6 +70,11 @@ def sample_long_running_recognize(storage_uri):
         # First alternative is the most probable result
         alternative = result.alternatives[0]
         print(u"Transcript: {}".format(alternative.transcript))
+        for word in alternative.words:
+            start_time = word.start_time.seconds + word.start_time.nanos / 1_000_000_000.0
+            end_time = word.end_time.seconds + word.end_time.nanos / 1_000_000_000.0
+            word = word.word.split('|')[0]
+            print(u"Word: {} {} {}".format(start_time, end_time, word))
 
 
 # [END speech_transcribe_async_gcs]
