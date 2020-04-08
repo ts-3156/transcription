@@ -31,10 +31,10 @@ class TranscriptsController < ApplicationController
     # TODO uploaded_file.valid?
     uploaded_file = UploadedFile.new(params['transcript']['audio'])
     @transcript.duration = uploaded_file.duration
-    logger.warn uploaded_file.inspect
 
     respond_to do |format|
       if @transcript.save
+        TranscribeAudioWorker.perform_async(@transcript.id)
         format.html { redirect_to action: :index, notice: 'Transcript was successfully created.' }
         format.json { render :show, status: :created, location: @transcript }
       else

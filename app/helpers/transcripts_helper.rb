@@ -1,7 +1,6 @@
 module TranscriptsHelper
   def duration_text(duration)
     if duration.nil? || duration < 0
-      'Unknown'
     elsif duration <= 60
       t('datetime.distance_in_words.x_seconds.other', count: duration)
     elsif duration < 3600

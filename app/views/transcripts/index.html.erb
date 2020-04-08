@@ -29,8 +29,13 @@
     <tbody>
     <% @transcripts.each do |transcript| %>
       <tr>
-        <td><%= link_to transcript.name, transcript_path(transcript) %></td>
-        <td><%= transcript.audio.attached? ? "#{transcript.audio.filename} (#{duration_text(transcript.duration)})" : 'None' %></td>
+        <td><%= transcript.name %></td>
+        <td>
+          <% if transcript.audio.attached? %>
+            <%= link_to transcript.audio.filename, url_for(transcript.audio) %> <%= duration_text(transcript.duration) %>
+          <% else %>
+            None
+          <% end %>
         <td><%=l transcript.created_at.in_time_zone('Tokyo'), format: :short %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
