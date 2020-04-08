@@ -26,10 +26,16 @@ class TranscriptsController < ApplicationController
   # POST /transcripts.json
   def create
     @transcript = Transcript.new(transcript_params)
+    @transcript.name = I18n.l(Time.zone.now.in_time_zone('Tokyo'), format: :short) if @transcript.name.blank?
+
+    # TODO uploaded_file.valid?
+    uploaded_file = UploadedFile.new(params['transcript']['audio'])
+    @transcript.duration = uploaded_file.duration
+    logger.warn uploaded_file.inspect
 
     respond_to do |format|
       if @transcript.save
-        format.html { redirect_to @transcript, notice: 'Transcript was successfully created.' }
+        format.html { redirect_to action: :index, notice: 'Transcript was successfully created.' }
         format.json { render :show, status: :created, location: @transcript }
       else
         format.html { render :new }
