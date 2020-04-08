@@ -1,27 +1,46 @@
-<%= form_with(model: transcript, local: true) do |form| %>
-  <% if transcript.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(transcript.errors.count, "error") %> prohibited this transcript from being saved:</h2>
+<%= form_with model: @transcript, local: true, html: {class: "form-horizontal transcript"} do |f| %>
 
-      <ul>
-        <% transcript.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+  <% if @transcript.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@transcript.errors.count, "error") %> prohibited this transcript from
+          being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <% @transcript.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%= f.error_span(:name) %>
   </div>
 
-  <div class="field">
-    <%= form.label :audio %>
-    <%= form.file_field :audio %>
+  <div class="form-group">
+    <%= f.label :audio, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" id="inputFile">
+        <label class="custom-file-label" for="inputFile">Choose file</label>
+      </div>
+    </div>
+    <%= f.error_span(:name) %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  transcripts_path, :class => 'btn btn-default' %>
+    </div>
   </div>
+
 <% end %>

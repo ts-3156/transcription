@@ -1,6 +1,7 @@
-<h1>Editing Transcript</h1>
-
-<%= render 'form', transcript: @transcript %>
-
-<%= link_to 'Show', @transcript %> |
-<%= link_to 'Back', transcripts_path %>
+<div class="container">
+  <%- model_class = Transcript -%>
+  <div class="page-header">
+    <h1><%= t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
+  </div>
+  <%= render :partial => 'form' %>
+</div>
