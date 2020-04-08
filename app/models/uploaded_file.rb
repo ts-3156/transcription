@@ -14,6 +14,6 @@ class UploadedFile
   end
 
   def detect_duration(file_path)
-    `/usr/local/bin/ffprobe  -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 #{file_path}`.strip
+    `#{ENV['FFPROB']} -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 #{file_path}`.strip
   end
 end

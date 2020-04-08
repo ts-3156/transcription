@@ -57,7 +57,7 @@ def sample_long_running_recognize(storage_uri):
         "language_code": language_code,
         "enable_word_time_offsets": True,
         "enable_automatic_punctuation": True,
-        "encoding": encoding,
+        # "encoding": encoding,
     }
     audio = {"uri": storage_uri}
 
