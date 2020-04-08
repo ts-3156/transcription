@@ -2,10 +2,38 @@
 ja:
   layouts:
     application:
-      brand_title: '議事録の文字起こし'
+      brand_title: '議事録文字起こしAI 無料版'
+  transcripts:
+    index:
+      how_to_use:
+        title: '議事録文字起こしAIの使い方'
+        text: '議事録文字起こしAIは、会議録の文字起こしに特化したAIです。'
+      inquiry:
+        title: 'お問い合わせ'
+        text: '議事録文字起こしAIについて、質問やご要望は ○○ までお気軽にご連絡ください。'
+      create:
+        title: '議事録文字起こしを作成する'
+        text: '音声ファイルを指定することで、議事録の文字起こしを作成します。'
+      list:
+        title: '作成した文字起こしの一覧'
+        text: 'これまでに作成した文字起こしの一覧を表示しています。'
+    new:
+      how_to_use: '議事録文字起こしAIの使い方'
+    form:
+      name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号'
+      name_hint: '省略した場合は作成日時が自動的に入力されます'
+      choose_file: 'クリックして音声ファイルを選択する'
+      audio_hint: 'mp3、wav、flat 形式に対応しています。他の形式をご利用する場合は ○○ までお気軽にご連絡ください'
+      browse: '参照'
+      required: '必須'
   activerecord:
     models:
-      Transcript: 議事録の文字起こし
+      Transcript:
+    attributes:
+      transcript:
+        name: '文字起こしの名前'
+        audio: '音声ファイル'
+        created_at: '作成日時'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

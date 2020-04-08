@@ -1,12 +1,25 @@
-<div class="container">
+<div class="container pt-5">
 <%- model_class = Transcript -%>
-  <div class="page-header">
-    <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-  </div>
+  <h1 class="h3"><%= t('.how_to_use.title') %></h1>
+  <div class="mb-5"><%= t('.how_to_use.text') %></div>
+
+  <h1 class="h3"><%= t('.inquiry.title') %></h1>
+  <div class="mb-5"><%= t('.inquiry.text') %></div>
+
+  <hr>
+
+  <h1 class="h3"><%= t('.create.title') %></h1>
+  <div class="mb-5"><%= t('.create.text') %></div>
+  <%= render :partial => 'form' %>
+
+  <hr>
+
+  <h1 class="h3"><%= t('.list.title') %></h1>
+  <div class="mb-5"><%= t('.list.text') %></div>
+
   <table class="table table-striped">
     <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:audio) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
@@ -16,10 +29,9 @@
     <tbody>
     <% @transcripts.each do |transcript| %>
       <tr>
-        <td><%= link_to transcript.id, transcript_path(transcript) %></td>
-        <td><%= transcript.name %></td>
+        <td><%= link_to transcript.name, transcript_path(transcript) %></td>
         <td><%= transcript.audio.attached? ? transcript.audio.filename : 'None' %></td>
-        <td><%=l transcript.created_at %></td>
+        <td><%=l transcript.created_at.in_time_zone('Tokyo'), format: :short %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_transcript_path(transcript), :class => 'btn btn-outline-secondary btn-xs' %>
@@ -34,7 +46,5 @@
     </tbody>
   </table>
 
-  <%= link_to t('.new', :default => t("helpers.links.new")),
-              new_transcript_path,
-              :class => 'btn btn-primary' %>
+  <%= link_to t('.new', :default => t("helpers.links.new")), new_transcript_path, :class => 'btn btn-primary' %>
 </div>

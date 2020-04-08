@@ -5,6 +5,7 @@ class TranscriptsController < ApplicationController
   # GET /transcripts.json
   def index
     @transcripts = Transcript.all
+    @transcript = Transcript.new
   end
 
   # GET /transcripts/1
