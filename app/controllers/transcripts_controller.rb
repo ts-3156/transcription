@@ -69,6 +69,6 @@ class TranscriptsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transcript_params
-      params.require(:transcript).permit(:name)
+      params.require(:transcript).permit(:name, :audio)
     end
 end

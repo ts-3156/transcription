@@ -5,5 +5,10 @@
   <%= @transcript.name %>
 </p>
 
+<p>
+  <strong>Audio:</strong>
+  <%= @transcript.audio.filename if @transcript.audio.attached? %>
+</p>
+
 <%= link_to 'Edit', edit_transcript_path(@transcript) %> |
 <%= link_to 'Back', transcripts_path %>
