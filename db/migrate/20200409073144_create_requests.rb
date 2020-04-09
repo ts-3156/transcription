@@ -4,6 +4,8 @@ class CreateRequests < ActiveRecord::Migration[6.0]
       t.string :name
 
       t.timestamps
+
+      t.index :created_at
     end
   end
 end

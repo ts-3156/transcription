@@ -5,6 +5,13 @@ ja:
       brand_title: '議事録文字起こしAI 無料版'
   requests:
     index:
+      download: 'ダウンロード'
+      x_characters: '%{count}文字'
+      status:
+        started:  '準備中'
+        in_progress: '文字起こし中'
+        succeeded: '完了'
+        failed: '失敗'
       how_to_use:
         title: '議事録文字起こしAIの使い方'
         text: '議事録文字起こしAIは、会議録の文字起こしに特化したAIです。'
@@ -33,7 +40,7 @@ ja:
       request:
         name: '名前'
         audio: '音声ファイル'
-        result: '変換結果'
+        output: '変換結果'
         created_at: '作成日時'
         expires_at: '有効期限'
     errors:

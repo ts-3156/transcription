@@ -7,6 +7,9 @@ class CreateAudios < ActiveRecord::Migration[6.0]
       t.integer :duration
 
       t.timestamps
+
+      t.index :request_id
+      t.index :created_at
     end
   end
 end

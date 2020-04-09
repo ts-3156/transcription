@@ -28,6 +28,7 @@
 # [START speech_transcribe_async_gcs]
 from google.cloud import speech_v1
 from google.cloud.speech_v1 import enums
+import json
 
 
 def sample_long_running_recognize(storage_uri):
@@ -63,19 +64,25 @@ def sample_long_running_recognize(storage_uri):
 
     operation = client.long_running_recognize(config, audio)
 
-    print(u"Waiting for operation to complete...")
+    # print(u"Waiting for operation to complete...")
     response = operation.result()
+    output = {'results': []}
 
     for result in response.results:
         # First alternative is the most probable result
         alternative = result.alternatives[0]
-        print(u"Transcript: {}".format(alternative.transcript))
+        # print(u"Transcript: {}".format(alternative.transcript))
+
+        words = []
         for word in alternative.words:
             start_time = word.start_time.seconds + word.start_time.nanos / 1_000_000_000.0
             end_time = word.end_time.seconds + word.end_time.nanos / 1_000_000_000.0
             word = word.word.split('|')[0]
-            print(u"Word: {} {} {}".format(start_time, end_time, word))
+            words.append({'word': word, 'start': start_time, 'end': end_time})
+            # print(u"Word: {} {} {}".format(start_time, end_time, word))
 
+        output['results'].append({'transcript': alternative.transcript, 'words': words})
+    print(json.dumps(output))
 
 # [END speech_transcribe_async_gcs]
 

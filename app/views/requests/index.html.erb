@@ -1,5 +1,5 @@
 <div class="container pt-5">
-<%- model_class = Request -%>
+  <%- model_class = Request -%>
   <h1 class="h3"><%= t('.how_to_use.title') %></h1>
   <div class="mb-5"><%= t('.how_to_use.text') %></div>
 
@@ -22,7 +22,7 @@
     <tr>
       <th><%= model_class.human_attribute_name(:name) %></th>
       <th><%= model_class.human_attribute_name(:audio) %></th>
-      <th><%= model_class.human_attribute_name(:result) %></th>
+      <th><%= model_class.human_attribute_name(:output) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%= model_class.human_attribute_name(:expires_at) %></th>
     </tr>
@@ -30,6 +30,7 @@
     <tbody>
     <% @requests.each do |request| %>
       <% audio = request.audio %>
+      <% transcript = request.transcript %>
       <tr>
         <td><%= request.name %></td>
         <td>
@@ -38,8 +39,16 @@
           <% else %>
             <%= audio.filename %>
           <% end %>
-        <td><%= 'output.json' %></td>
-        <td><%=l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
+        </td>
+        <td>
+          <% if transcript.blob.attached? %>
+            <div><%= link_to t('.download'), url_for(transcript.blob) %> <%= t('.x_characters', count: transcript.character_count) %></div>
+            <div style="font-size: x-small; overflow: hidden;" class="text-muted"><%= transcript.summary %></div>
+          <% else %>
+            <%= t(".status.#{transcript.status}") %>
+          <% end %>
+        </td>
+        <td><%= l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
         <td><%= distance_of_time_in_words_to_now(7.days.since) %></td>
       </tr>
     <% end %>
