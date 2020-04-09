@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= content_for?(:title) ? yield(:title) : "Transcription" %></title>
+  <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Description" %>">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
@@ -12,6 +13,8 @@
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous"/>
 
   <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= javascript_pack_tag 'application' %>
@@ -25,7 +28,7 @@
 
 <nav class="navbar navbar-light bg-light static-top">
   <div class="container">
-    <a class="navbar-brand" style="font-size: 2.0rem;" href="#"><%= t('.brand_title') %></a>
+    <a class="navbar-brand" style="font-size: 2.0rem;" href="#"><%= t('.brand_html') %></a>
     <%# if user_signed_in? %>
     <!--        @<%#= current_user.screen_name %>-->
     <%# else %>
@@ -56,5 +59,33 @@
 <% end %>
 
 <%= yield %>
+
+<footer class="footer bg-light py-4">
+  <div class="container text-center">
+    <ul class="list-inline mb-4">
+      <li class="list-inline-item">
+        <a href="/terms_of_service.html"><%= t('.terms_of_use') %></a>
+      </li>
+      <li class="list-inline-item">&sdot;</li>
+      <li class="list-inline-item">
+        <a href="/privacy_policy.html"><%= t('.privacy_policy') %></a>
+      </li>
+      <!--          <li class="list-inline-item">&sdot;</li>-->
+      <!--          <li class="list-inline-item">-->
+      <%# if user_signed_in? %>
+      <%#= link_to t('.sign_out'), destroy_user_session_path, method: :delete %>
+      <%# else %>
+      <%#= link_to t('.sign_in'), user_twitter_omniauth_authorize_path %>
+      <%# end %>
+      <!--          </li>-->
+      <li class="list-inline-item">&sdot;</li>
+      <li class="list-inline-item">
+        <a href="https://twitter.com/ts_3156" target="_blank"><%= t('.twitter') %></a>
+      </li>
+    </ul>
+    <div class="mb-4"><img src="<%= image_path '/address.svg' %>" width="250" alt=""></div>
+    <div class="text-muted">&copy; <%= t('.brand_without_free') %> 2020. All Rights Reserved.</div>
+  </div>
+</footer>
 </body>
 </html>

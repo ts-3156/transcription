@@ -1,30 +1,56 @@
-<div class="container pt-5">
-  <%- model_class = Request -%>
-  <h1 class="h3"><%= t('.how_to_use.title') %></h1>
-  <div class="mb-5"><%= t('.how_to_use.text') %></div>
+<% content_for :title, t('.meta.title') %>
+<% content_for :description, t('.meta.description') %>
 
-  <h1 class="h3"><%= t('.inquiry.title') %></h1>
-  <div class="mb-5"><%= t('.inquiry.text') %></div>
+<div class="container">
+  <%- model_class = Request -%>
+  <h2 class="h3 mt-4"><%= t('.about.title') %></h2>
+  <div><%= t('.about.desc') %></div>
+  <div class="text-right"><a href="#how_to_use"><%= t('.about.see_more') %></a></div>
 
   <hr>
 
-  <h1 class="h3"><%= t('.create.title') %></h1>
-  <div class="mb-5"><%= t('.create.text') %></div>
+  <h2 class="h3 mt-4"><%= t('.create.title') %></h2>
+  <div class="mb-4"><%= t('.create.desc') %></div>
   <%= render :partial => 'form' %>
 
   <hr>
 
-  <h1 class="h3"><%= t('.list.title') %></h1>
-  <div class="mb-5"><%= t('.list.text') %></div>
+  <h2 class="h3 mt-4"><%= t('.list.title') %></h2>
+  <div class="mb-4"><%= t('.list.desc') %></div>
 
   <table class="table table-striped">
     <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:audio) %></th>
-      <th><%= model_class.human_attribute_name(:output) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%= model_class.human_attribute_name(:expires_at) %></th>
+      <th>
+        <%= model_class.human_attribute_name(:name) %>
+        <%= modal_trigger(target: '#hint_request_name') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:audio) %>
+        <%= modal_trigger(target: '#hint_request_audio') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:output) %>
+        <%= modal_trigger(target: '#hint_request_output') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:created_at) %>
+        <%= modal_trigger(target: '#hint_request_created_at') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
+      </th>
+      <th>
+        <%= model_class.human_attribute_name(:expires_at) %>
+        <%= modal_trigger(target: '#hint_request_expires_at') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -43,15 +69,52 @@
         <td>
           <% if transcript.blob.attached? %>
             <div><%= link_to t('.download'), url_for(transcript.blob) %> <%= t('.x_characters', count: transcript.character_count) %></div>
-            <div style="font-size: x-small; overflow: hidden;" class="text-muted"><%= transcript.summary %></div>
+            <div style="font-size: small; overflow: hidden;" class="text-muted"><%= transcript.summary.truncate(50) %></div>
           <% else %>
             <%= t(".status.#{transcript.status}") %>
           <% end %>
         </td>
         <td><%= l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
-        <td><%= distance_of_time_in_words_to_now(7.days.since) %></td>
+        <td><%= distance_of_time_in_words_to_now((request.created_at + 30.days).in_time_zone('Tokyo')) %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
+
+  <hr>
+
+  <h2 id="how_to_use" class="h3 mt-4"><%= t('.how_to_use.title') %></h2>
+  <div class="mb-5"><%= t('.how_to_use.desc') %></div>
+
+  <% t('.how_to_use.titles').zip(t('.how_to_use.texts'), t('.how_to_use.images')).each.with_index do |(title, text, image), i| %>
+    <div class="row mb-5">
+      <div class="col-lg-6">
+        <h3 class="h4"><%= i + 1 %>. <%= title %></h3>
+        <div class="mt-2"><%= text %></div>
+      </div>
+      <div class="col"><img style="width: 100%; border: 1px solid #ccc;" src="<%= image_path image %>" alt=""></div>
+    </div>
+  <% end %>
+
+  <hr>
+
+  <h2 class="h3 mt-4"><%= t('.qa.title') %></h2>
+  <div class="mb-5"><%= t('.qa.desc_html') %></div>
+
+  <% t('.qa.questions').zip(t('.qa.answers_html')).each.with_index do |(question, answer), i| %>
+    <hh3 class="h4"><%= i + 1 %>. <%= question %></hh3>
+    <div class="mt-2 mb-5"><%= answer %></div>
+  <% end %>
+
+  <hr>
+
+  <h2 class="h3 mt-4"><%= t('.inquiry.title') %></h2>
+  <div class="mb-5"><%= t('.inquiry.desc_html') %></div>
+
 </div>
+
+<%= modal_dialog(id: 'hint_request_name', title: model_class.human_attribute_name(:name), body: t('.modal.name')) %>
+<%= modal_dialog(id: 'hint_request_audio', title: model_class.human_attribute_name(:audio), body: t('.modal.audio')) %>
+<%= modal_dialog(id: 'hint_request_output', title: model_class.human_attribute_name(:output), body: t('.modal.output')) %>
+<%= modal_dialog(id: 'hint_request_created_at', title: model_class.human_attribute_name(:created_at), body: t('.modal.created_at')) %>
+<%= modal_dialog(id: 'hint_request_expires_at', title: model_class.human_attribute_name(:expires_at), body: t('.modal.expires_at')) %>

@@ -48,6 +48,7 @@ class NameField {
 
   validate() {
     this.errors = [];
+    this.$errors_container.empty().hide();
     var val = this.val();
     console.log('Start name validation', val);
 
@@ -59,8 +60,12 @@ class NameField {
   }
 
   displayErrors() {
-    var message = this.errors.join('<br>');
-    this.$errors_container.html(message);
+    if (this.errors.length === 0) {
+      this.$errors_container.empty().hide();
+    } else {
+      var message = this.errors.join('<br>');
+      this.$errors_container.html(message).show();
+    }
   }
 }
 
@@ -88,11 +93,12 @@ class FileField {
 
   validate() {
     this.errors = [];
+    this.$errors_container.empty().hide();
     var files = this.files();
     console.log('Start audio valiadtion', files);
 
     if (files.length !== 1) {
-      this.errors.push('ファイルを1つ選択してください。');
+      this.errors.push('音声または動画ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。');
       return;
     }
 
@@ -103,7 +109,7 @@ class FileField {
     }
 
     if (!file.type.match(/audio/i)) {
-      this.errors.push('音声ファイルを選択してください。WAV、FLAC、MP3形式に対応しています。');
+      this.errors.push('音声または動画ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。');
     }
 
     if (file.size > 120000000) { // 120 MB
@@ -114,8 +120,12 @@ class FileField {
   }
 
   displayErrors() {
-    var message = this.errors.join('<br>');
-    this.$errors_container.html(message);
+    if (this.errors.length === 0) {
+      this.$errors_container.empty().hide();
+    } else {
+      var message = this.errors.join('<br>');
+      this.$errors_container.html(message).show();
+    }
   }
 }
 

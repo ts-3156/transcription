@@ -2,47 +2,124 @@
 ja:
   layouts:
     application:
-      brand_title: '議事録文字起こしAI 無料版'
+      brand_html: '文字起こしAI <small>無料版</small>'
+      brand_without_free: '文字起こしAI'
+      sign_up: '新規作成'
+      sign_in: 'ログイン'
+      sign_out: 'ログアウト'
+      terms_of_use: '利用規約'
+      privacy_policy: 'プライバシーポリシー'
+      twitter: 'Twitter'
   requests:
     index:
+      meta:
+        title: '文字起こしAI - 業界最安の100円/時・高品質・待ち時間なし'
+        description: |
+          文字起こしAIは、会議やインタビューの文字起こしに特化したAIです。AIが文字起こしをするため、会議録・議事録の作成が待ち時間なしで完了します。
+          料金は業界最安の100円/時です。最初の10時間分は無料で利用できます。
       download: 'ダウンロード'
       x_characters: '%{count}文字'
+      modal:
+        name: '登録した文字起こしの名前です。'
+        audio: '登録した音声ファイルです。WAV、FLAC、MP3、MP4形式に対応しています。'
+        output: '音声ファイルの文字起こし結果です。'
+        created_at: '音声ファイルを登録した日時です。'
+        expires_at: '文字起こし結果を保存する期間です。音声ファイルの登録から30日間は保存されます。'
       status:
         started:  '準備中'
         in_progress: '文字起こし中'
         succeeded: '完了'
         failed: '失敗'
-      how_to_use:
-        title: '議事録文字起こしAIの使い方'
-        text: '議事録文字起こしAIは、会議録の文字起こしに特化したAIです。'
-      inquiry:
-        title: 'お問い合わせ'
-        text: '議事録文字起こしAIについて、質問やご要望は ○○ までお気軽にご連絡ください。'
+      about:
+        title: '文字起こしAIとは'
+        desc: |
+          文字起こしAIは、無料で使える会議やインタビューの文字起こしに特化したAIです。AIが文字起こしをするため、会議録・議事録の作成が待ち時間なしで完了します。
+          料金は業界最安の100円/時です。最初の10時間分は無料で利用できます。
+        see_more: '使い方をもっと見る'
       create:
-        title: '議事録文字起こしを作成する'
-        text: '音声ファイルを指定することで、議事録の文字起こしを作成します。'
+        title: '文字起こしを作成する'
+        desc: '音声ファイルを指定することで、会議録、議事録、インタビューの文字起こしを作成します。10時間分までは無料でご利用できます。'
       list:
         title: '作成した文字起こしの一覧'
-        text: 'これまでに作成した文字起こしの一覧を表示しています。'
-    new:
-      how_to_use: '議事録文字起こしAIの使い方'
+        desc: 'これまでに作成した文字起こしの一覧を表示しています。無料版では、登録した文字起こしの保存期間は30日間です。'
+      how_to_use:
+        title: '文字起こしAIの使い方'
+        desc: |
+          文字起こしAIを使うことで、会議録、議事録、インタビューの文字起こしを簡単に行うことができます。
+          文字起こしAIでは、2つの手順だけで音声または動画ファイルの文字起こしを作成することができます。
+        titles:
+          - '文字起こしの名前を入力する'
+          - '文字起こしする音声ファイルを登録する'
+        texts:
+          - '作成する文字起こしの名前を入力してください。何の文字起こしなのかが後から分かるように分かりやすい名前を付けましょう。'
+          - '作成する文字起こしの名前を入力してください。何の文字起こしなのかが後から分かるように分かりやすい名前を付けましょう。'
+        images:
+          - '/how_to_use/screenshot_name.png'
+          - '/how_to_use/screenshot_audio.png'
+      inquiry:
+        title: 'お問い合わせ'
+        desc_html: |
+          文字起こしAIについて、質問やご要望は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
+          文字起こしAIのご利用は、10時間分までは無料です。それ以降は、100円/時でご利用いただけます。
+      qa:
+        title: 'よくある質問'
+        desc_html: '文字起こしAIについて、分からない点や気になる点は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご質問ください。'
+        questions:
+          - '無料で使えますか？'
+          - 'どうやって使えばよいですか？'
+          - 'セキュリティは大丈夫ですか？'
+          - '有料になると何が出来ますか？'
+        answers_html:
+          - |
+            はい、無料で使えます。<br>無料の範囲で、10時間分までの文字起こしを作成することができます。登録した音声ファイルと文字起こし結果は30日間保存されます。
+          - '音声または動画ファイルを選択するだけで使えます。<a href="#how_to_use">文字起こしAIの使い方</a> に詳しい使い方を書いています。'
+          - 'TLS/SSLを使用した業界最高水準のセキュリティを備えています。登録した音声または動画ファイルは安全に管理されており、文字起こしAIの用途でしか利用しません。'
+          - |
+            有料になると、100円/時で10時間分を超えて文字起こしを作成出来るようになります。他にも下記の違いがあります。
+            さらにご質問したい場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
+            <table class="table table-bordered mt-4">
+              <caption>無料版と有料版の違い</caption>
+              <thead>
+                <tr><th></th><th>無料版</th><th>有料版</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1時間あたりの価格</td><td>無料</td><td>100円/時（1.67円/分）</td></tr>
+                <tr><td>作成できる時間</td><td>10時間分まで</td><td>無制限</td></tr>
+                <tr><td>1ファイルあたりの時間</td><td>60分まで</td><td>無制限</td></tr>
+                <tr><td>利用できるファイル形式</td><td>音声ファイルのみ</td><td>音声または動画ファイル</td></tr>
+                <tr><td>1ファイルあたりのサイズ</td><td>120MBまで</td><td>無制限</td></tr>
+                <tr><td>保存できるファイル数</td><td>10個まで</td><td>無制限</td></tr>
+                <tr><td>保存できる期間</td><td>30日間</td><td>無制限</td></tr>
+                <tr><td>支払い方法</td><td></td><td>クレジットカード</td></tr>
+              </tbody>
+            </table>
+    create:
+      created: '%{at} に作成'
     form:
-      name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号'
-      name_hint: '省略した場合は作成日時が自動的に入力されます'
-      choose_file: 'クリックして音声ファイルを選択する'
-      audio_hint: 'mp3、wav、flat 形式に対応しています。他の形式をご利用する場合は ○○ までお気軽にご連絡ください'
+      name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
+      name_hints:
+        - '省略した場合は作成日時が自動的に入力されます'
+      choose_file: 'クリックして音声または動画ファイルを選択する'
+      audio_hints_html:
+        - '無料版では、<strong>1つのファイルにつき最大で60分</strong>まで文字起こしできます'
+        - 'WAV、FLAC、MP3、MP4形式に対応しています'
+        - '他の形式をご利用する場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください'
       browse: '参照'
       required: '必須'
+      optional: '省略可'
+      modal:
+        name: '登録する文字起こしの名前です。何の音声ファイルを登録したのかのメモとしてご利用ください。'
+        audio: '文字起こしする音声ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。'
   activerecord:
     models:
       request:
     attributes:
       request:
-        name: '名前'
+        name: '名前メモ'
         audio: '音声ファイル'
         output: '変換結果'
-        created_at: '作成日時'
-        expires_at: '有効期限'
+        created_at: '登録日時'
+        expires_at: '保存期間'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
@@ -51,57 +128,57 @@ ja:
           has_many: "%{record}が存在しているので削除できません"
   date:
     abbr_day_names:
-    - 日
-    - 月
-    - 火
-    - 水
-    - 木
-    - 金
-    - 土
+      - 日
+      - 月
+      - 火
+      - 水
+      - 木
+      - 金
+      - 土
     abbr_month_names:
-    - 
-    - 1月
-    - 2月
-    - 3月
-    - 4月
-    - 5月
-    - 6月
-    - 7月
-    - 8月
-    - 9月
-    - 10月
-    - 11月
-    - 12月
+      -
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
     day_names:
-    - 日曜日
-    - 月曜日
-    - 火曜日
-    - 水曜日
-    - 木曜日
-    - 金曜日
-    - 土曜日
+      - 日曜日
+      - 月曜日
+      - 火曜日
+      - 水曜日
+      - 木曜日
+      - 金曜日
+      - 土曜日
     formats:
       default: "%Y/%m/%d"
       long: "%Y年%m月%d日(%a)"
       short: "%m/%d"
     month_names:
-    - 
-    - 1月
-    - 2月
-    - 3月
-    - 4月
-    - 5月
-    - 6月
-    - 7月
-    - 8月
-    - 9月
-    - 10月
-    - 11月
-    - 12月
+      -
+      - 1月
+      - 2月
+      - 3月
+      - 4月
+      - 5月
+      - 6月
+      - 7月
+      - 8月
+      - 9月
+      - 10月
+      - 11月
+      - 12月
     order:
-    - :year
-    - :month
-    - :day
+      - :year
+      - :month
+      - :day
   datetime:
     distance_in_words:
       about_x_hours:

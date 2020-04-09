@@ -1,7 +1,7 @@
 class RequestsController < ApplicationController
 
   def index
-    @requests = Request.includes(audio: :blob_blob, transcript: :blob_blob)
+    @requests = Request.includes(audio: :blob_blob, transcript: :blob_blob).order(created_at: :desc).limit(5)
     @request = Request.new
   end
 
@@ -11,7 +11,7 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new(name: params['request']['name'])
-    @request.name = I18n.l(Time.zone.now.in_time_zone('Tokyo'), format: :short) if @request.name.blank?
+    @request.name = t('.created', at: l(Time.zone.now.in_time_zone('Tokyo'), format: :short)) if @request.name.blank?
 
     # TODO uploaded_file.valid? && @request.valid?
     uploaded_file = UploadedFile.new(params['request']['audio'])
