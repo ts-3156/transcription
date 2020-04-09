@@ -28,19 +28,20 @@ class TranscriptsController < ApplicationController
     @transcript = Transcript.new(transcript_params)
     @transcript.name = I18n.l(Time.zone.now.in_time_zone('Tokyo'), format: :short) if @transcript.name.blank?
 
-    # TODO uploaded_file.valid?
+    # TODO uploaded_file.valid? && @transcript.valid?
     uploaded_file = UploadedFile.new(params['transcript']['audio'])
-    @transcript.duration = uploaded_file.duration
+    @transcript.build_audio(filename: uploaded_file.original_filename, codec: uploaded_file.codec, duration: uploaded_file.duration)
 
-    respond_to do |format|
-      if @transcript.save
-        TranscribeAudioWorker.perform_async(@transcript.id)
-        format.html { redirect_to action: :index, notice: 'Transcript was successfully created.' }
-        format.json { render :show, status: :created, location: @transcript }
-      else
-        format.html { render :new }
-        format.json { render json: @transcript.errors, status: :unprocessable_entity }
-      end
+    if @transcript.save
+      uploaded_file_hash = "#{@transcript.id}_#{Digest::MD5.hexdigest(uploaded_file.tempfile.read)}"
+      uploaded_file_path = Rails.root.join(ENV['TMP_AUDIO_DIR'], "#{uploaded_file_hash}_#{File.basename(uploaded_file.path)}")
+      FileUtils.mv(uploaded_file.path, uploaded_file_path)
+
+      TranscribeAudioWorker.perform_async(@transcript.id, uploaded_file_path, uploaded_file_hash)
+      flash[:notice] = 'Transcript was successfully created.'
+      redirect_to action: :index
+    else
+      # TODO display error message
     end
   end
 
@@ -76,6 +77,6 @@ class TranscriptsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def transcript_params
-      params.require(:transcript).permit(:name, :audio)
+      params.require(:transcript).permit(:name)
     end
 end

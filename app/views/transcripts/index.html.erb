@@ -28,13 +28,14 @@
     </thead>
     <tbody>
     <% @transcripts.each do |transcript| %>
+      <% audio = transcript.audio %>
       <tr>
         <td><%= transcript.name %></td>
         <td>
-          <% if transcript.audio.attached? %>
-            <%= link_to transcript.audio.filename, url_for(transcript.audio) %> <%= duration_text(transcript.duration) %>
+          <% if audio.blob.attached? %>
+            <%= link_to audio.filename, url_for(audio.blob) %> <%= duration_text(audio.duration) %>
           <% else %>
-            None
+            <%= audio.filename %>
           <% end %>
         <td><%=l transcript.created_at.in_time_zone('Tokyo'), format: :short %></td>
         <td>
