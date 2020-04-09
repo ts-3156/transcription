@@ -1,5 +1,4 @@
 class Transcript < ApplicationRecord
-  has_one :audio
-
-  validates :name, presence: true, length: {maximum: 200}
+  belongs_to :request
+  has_one_attached :blob
 end

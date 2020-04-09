@@ -1,9 +1,9 @@
 class Form {
   constructor() {
-    this.$el = $('#form_transcript');
+    this.$el = $('#model_form');
     this.name = new NameField();
     this.audio = new FileField();
-    this.$submit = $('#form_transcript_submit');
+    this.$submit = $('#model_form_submit');
 
     var self = this;
     this.$submit.on('click', function (e) {
@@ -37,8 +37,8 @@ class Form {
 
 class NameField {
   constructor() {
-    this.$el = $('#form_transcript_name');
-    this.$errors_container = $('#form_transcript_name_errors');
+    this.$el = $('#model_form_name');
+    this.$errors_container = $('#model_form_name_errors');
     this.errors = [];
   }
 
@@ -66,8 +66,8 @@ class NameField {
 
 class FileField {
   constructor() {
-    this.$el = $('#form_transcript_audio');
-    this.$errors_container = $('#form_transcript_audio_errors');
+    this.$el = $('#model_form_audio');
+    this.$errors_container = $('#model_form_audio_errors');
     this.errors = [];
 
     var self = this;

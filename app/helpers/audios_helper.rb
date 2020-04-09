@@ -1,4 +1,4 @@
-module TranscriptsHelper
+module AudiosHelper
   def duration_text(duration)
     if duration.nil? || duration < 0
     elsif duration <= 60

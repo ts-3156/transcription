@@ -1,21 +1,21 @@
-<%= javascript_pack_tag 'transcripts' %>
+<%= javascript_pack_tag 'requests' %>
 
-<%= form_with model: @transcript, local: true, html: {id: 'form_transcript', class: "transcript"} do |f| %>
+<%= form_with model: @request, local: true, html: {id: 'model_form', class: "request"} do |f| %>
 
   <div class="form-group">
     <div class="col-lg-4">
       <%= f.label :name, :class => 'control-label' %>
     </div>
     <div class="col-lg">
-      <div id="form_transcript_name_errors" class="form-text text-danger">
+      <div id="model_form_name_errors" class="form-text text-danger">
         <ul>
-          <% @transcript.errors[:name].each do |msg| %>
+          <% @request.errors[:name].each do |msg| %>
             <li class="text-danger"><%= msg %></li>
           <% end %>
         </ul>
       </div>
 
-      <%= f.text_field :name, id: 'form_transcript_name', placeholder: t('.name_placeholder'), :class => 'form-control' %>
+      <%= f.text_field :name, id: 'model_form_name', placeholder: t('.name_placeholder'), :class => 'form-control' %>
       <div class="form-text text-muted"><%= t('.name_hint') %></div>
     </div>
   </div>
@@ -26,16 +26,16 @@
       <span style="color: red;"><%= t('.required') %></span>
     </div>
     <div class="col-lg">
-      <div id="form_transcript_audio_errors" class="form-text text-danger">
+      <div id="model_form_audio_errors" class="form-text text-danger">
         <ul>
-          <% @transcript.errors[:audio].each do |msg| %>
+          <% @request.errors[:audio].each do |msg| %>
             <li class="text-danger"><%= msg %></li>
           <% end %>
         </ul>
       </div>
 
       <div class="custom-file">
-        <%= f.file_field :audio, id: 'form_transcript_audio', class: 'custom-file-input', required: true %>
+        <%= f.file_field :audio, id: 'model_form_audio', class: 'custom-file-input', required: true %>
         <label class="custom-file-label text-muted" for="audio" data-browse="<%= t('.browse') %>"><%= t('.choose_file') %></label>
       </div>
       <div class="form-text text-muted"><%= t('.audio_hint') %></div>
@@ -44,8 +44,8 @@
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, id: 'form_transcript_submit', :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")), transcripts_path, :class => 'btn btn-default' %>
+      <%= f.submit nil, id: 'model_form_submit', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")), requests_path, :class => 'btn btn-default' %>
     </div>
   </div>
 

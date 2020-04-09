@@ -3,7 +3,7 @@ ja:
   layouts:
     application:
       brand_title: '議事録文字起こしAI 無料版'
-  transcripts:
+  requests:
     index:
       how_to_use:
         title: '議事録文字起こしAIの使い方'
@@ -28,12 +28,14 @@ ja:
       required: '必須'
   activerecord:
     models:
-      Transcript:
+      request:
     attributes:
-      transcript:
-        name: '文字起こしの名前'
+      request:
+        name: '名前'
         audio: '音声ファイル'
+        result: '変換結果'
         created_at: '作成日時'
+        expires_at: '有効期限'
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
