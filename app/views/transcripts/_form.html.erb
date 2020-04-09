@@ -1,32 +1,23 @@
 <%= javascript_pack_tag 'transcripts' %>
 
-<%= form_with model: @transcript, local: true, html: {class: "form-horizontal transcript"} do |f| %>
-
-  <% if @transcript.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@transcript.errors.count, "error") %> prohibited this transcript from
-          being saved:</h3>
-      </div>
-      <div class="panel-body">
-        <ul>
-          <% @transcript.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
+<%= form_with model: @transcript, local: true, html: {id: 'form_transcript', class: "transcript"} do |f| %>
 
   <div class="form-group">
     <div class="col-lg-4">
       <%= f.label :name, :class => 'control-label' %>
     </div>
     <div class="col-lg">
-      <%= f.text_field :name, placeholder: t('.name_placeholder'), :class => 'form-control' %>
-      <div class="text-muted"><%= t('.name_hint') %></div>
+      <div id="form_transcript_name_errors" class="form-text text-danger">
+        <ul>
+          <% @transcript.errors[:name].each do |msg| %>
+            <li class="text-danger"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <%= f.text_field :name, id: 'form_transcript_name', placeholder: t('.name_placeholder'), :class => 'form-control' %>
+      <div class="form-text text-muted"><%= t('.name_hint') %></div>
     </div>
-    <%= f.error_span(:name) %>
   </div>
 
   <div class="form-group">
@@ -35,20 +26,26 @@
       <span style="color: red;"><%= t('.required') %></span>
     </div>
     <div class="col-lg">
+      <div id="form_transcript_audio_errors" class="form-text text-danger">
+        <ul>
+          <% @transcript.errors[:audio].each do |msg| %>
+            <li class="text-danger"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+
       <div class="custom-file">
-        <%= f.file_field :audio, class: 'custom-file-input', id: 'audio', required: true %>
+        <%= f.file_field :audio, id: 'form_transcript_audio', class: 'custom-file-input', required: true %>
         <label class="custom-file-label text-muted" for="audio" data-browse="<%= t('.browse') %>"><%= t('.choose_file') %></label>
       </div>
-      <div class="text-muted"><%= t('.audio_hint') %></div>
+      <div class="form-text text-muted"><%= t('.audio_hint') %></div>
     </div>
-    <%= f.error_span(:name) %>
   </div>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                  transcripts_path, :class => 'btn btn-default' %>
+      <%= f.submit nil, id: 'form_transcript_submit', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")), transcripts_path, :class => 'btn btn-default' %>
     </div>
   </div>
 

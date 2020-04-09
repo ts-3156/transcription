@@ -1,10 +1,148 @@
-$(function () {
-  $('.custom-file-input').on('change', function () {
-    var name = '';
-    try {
-      name = $(this)[0].files[0].name;
-    } catch (e) {
+class Form {
+  constructor() {
+    this.$el = $('#form_transcript');
+    this.name = new NameField();
+    this.audio = new FileField();
+    this.$submit = $('#form_transcript_submit');
+
+    var self = this;
+    this.$submit.on('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (self.validate()) {
+        self.$el[0].submit();
+        return true;
+      } else {
+        if (self.name.errors.length !== 0) {
+          console.warn('name', self.name.errors);
+          self.name.displayErrors();
+        }
+        if (self.audio.errors.length !== 0) {
+          console.warn('audio', self.audio.errors);
+          self.audio.displayErrors();
+        }
+        return false;
+      }
+    });
+  }
+
+  validate() {
+    console.log('Start form validation', this.$name, this.$audio);
+    var r1 = this.name.validate();
+    var r2 = this.audio.validate();
+    return r1 && r2;
+  }
+}
+
+class NameField {
+  constructor() {
+    this.$el = $('#form_transcript_name');
+    this.$errors_container = $('#form_transcript_name_errors');
+    this.errors = [];
+  }
+
+  val() {
+    return this.$el.val();
+  }
+
+  validate() {
+    this.errors = [];
+    var val = this.val();
+    console.log('Start name validation', val);
+
+    if (Util.countChars(val) > 200) {
+      this.errors.push('文字起こしの名前は200文字以内にしてください。');
     }
-    $(this).next('.custom-file-label').text(name).removeClass('text-muted');
-  })
+
+    return this.errors.length === 0;
+  }
+
+  displayErrors() {
+    var message = this.errors.join('<br>');
+    this.$errors_container.html(message);
+  }
+}
+
+class FileField {
+  constructor() {
+    this.$el = $('#form_transcript_audio');
+    this.$errors_container = $('#form_transcript_audio_errors');
+    this.errors = [];
+
+    var self = this;
+    this.$el.on('change', function () {
+      var files = self.files();
+      if (files.length !== 1) {
+        console.warn('files.length is not 1.', files.length);
+        return;
+      }
+
+      $(this).next('.custom-file-label').text(files[0].name).removeClass('text-muted');
+    });
+  }
+
+  files() {
+    return this.$el[0].files;
+  }
+
+  validate() {
+    this.errors = [];
+    var files = this.files();
+    console.log('Start audio valiadtion', files);
+
+    if (files.length !== 1) {
+      this.errors.push('ファイルを1つ選択してください。');
+      return;
+    }
+
+    var file = files[0];
+
+    if (file.type.match(/video/i)) {
+      this.errors.push('動画ファイルは有料プランのみ利用できます。');
+    }
+
+    if (!file.type.match(/audio/i)) {
+      this.errors.push('音声ファイルを選択してください。WAV、FLAC、MP3形式に対応しています。');
+    }
+
+    if (file.size > 120000000) { // 120 MB
+      this.errors.push('120 MBより大きいファイルは有料プランのみ利用できます。');
+    }
+
+    return this.errors.length === 0;
+  }
+
+  displayErrors() {
+    var message = this.errors.join('<br>');
+    this.$errors_container.html(message);
+  }
+}
+
+class Util {
+  constructor() {
+  }
+
+  static countChars(str) {
+    var len = 0;
+    str = str.split("");
+
+    for (var i = 0; i < str.length; i++) {
+      if (str[i].match(/[ｦ-ﾟ]+/)) {
+        len++;
+      } else {
+        if (escape(str[i]).match(/^\%u/)) {
+          len += 2;
+        } else {
+          len++;
+        }
+      }
+    }
+
+    return len;
+  }
+}
+
+$(function () {
+  var form = new Form();
 });
