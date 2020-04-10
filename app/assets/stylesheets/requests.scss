@@ -1,3 +1,30 @@
-// Place all the styles related to the transcripts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+.bg-gradient-primary-to-secondary {
+  background-color: #DE6262;
+  background-image: linear-gradient(#DE6262 0%, #FFB88C 100%);
+}
+
+.navbar {
+  -webkit-transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.5s ease-in-out;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+
+  &.navbar-scrolled {
+    background-color: #1f2d41 !important;
+  }
+}
+
+
+.svg-border-rounded svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3rem;
+  width: 100%;
+}
+
+.page-header {
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
