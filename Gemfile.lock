@@ -58,6 +58,7 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
       msgpack (~> 1.0)
@@ -77,6 +78,12 @@ GEM
     crass (1.0.6)
     declarative (0.0.10)
     declarative-option (0.1.0)
+    devise (4.7.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     digest-crc (0.5.1)
     dotenv (2.7.5)
     dotenv-rails (2.7.5)
@@ -147,6 +154,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    orm_adapter (0.5.0)
     os (1.1.0)
     public_suffix (4.0.4)
     puma (4.3.3)
@@ -196,6 +204,9 @@ GEM
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
       uber (< 0.2.0)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     retriable (3.1.2)
     ruby_dep (1.5.0)
     rubyzip (2.3.0)
@@ -239,6 +250,8 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uber (0.1.0)
+    warden (1.2.8)
+      rack (>= 2.0.6)
     web-console (4.0.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -266,6 +279,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  devise
   dotenv-rails
   google-cloud-storage (~> 1.8)
   hiredis

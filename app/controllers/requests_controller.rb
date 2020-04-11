@@ -2,6 +2,7 @@ class RequestsController < ApplicationController
 
   def index
     @requests = Request.includes(audio: :blob_blob, transcript: :blob_blob).order(created_at: :desc).limit(5)
+    @requests = Request.where(id: [1, 2, 3]) if @requests.empty?
     @request = Request.new
   end
 

@@ -58,3 +58,4 @@ gem 'hiredis'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem "google-cloud-storage", "~> 1.8", require: false
+gem 'devise'

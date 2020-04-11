@@ -7,6 +7,8 @@ ja:
       free_duration: '10時間'
       free_duration_seconds: 36000
       price_per_minute: '10円/分'
+      price_per_minute_price: '10円'
+      price_per_minute_unit: '/分'
       expiration_for:
         guest: '7日間'
         login: '30日間'
@@ -19,6 +21,8 @@ ja:
       terms_of_use: '利用規約'
       privacy_policy: 'プライバシーポリシー'
       twitter: 'Twitter'
+  requests:
+    index:
       page_header:
         title: '文字起こしAI'
         text: |
@@ -26,8 +30,6 @@ ja:
           料金は業界最安の%{price}です。最初の%{duration}は無料で利用できます。
         free_trial: '無料で文字起こしする'
         see_more: '使い方をもっと見る'
-  requests:
-    index:
       meta:
         title: '文字起こしAI - 業界最安の%{price}・高品質・待ち時間なし'
         description: |
@@ -76,8 +78,10 @@ ja:
       list:
         title: '作成した文字起こしの一覧'
         desc: 'これまでに作成した文字起こしの一覧を表示しています。登録した文字起こしの保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。'
-        notices:
-          - 'ファイルの保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。'
+        notices_html:
+          - |
+            ファイルの保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。
+            ファイルの保存期間を長くするには <a href="/users/sign_up">ログイン</a> してください。
       how_to_use:
         title: '文字起こしAIの使い方'
         desc: |
@@ -97,6 +101,25 @@ ja:
         desc_html: |
           文字起こしAIについて、質問やご要望は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
+    create:
+      created: '%{at} に作成'
+    form:
+      name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
+      name_hints:
+        - '省略した場合は作成日時が自動的に入力されます'
+      choose_file: 'クリックして音声または動画ファイルを選択する'
+      audio_hints_html:
+        - '無料版では、<strong>1つのファイルにつき最大で60分</strong>まで文字起こしできます'
+        - 'WAV、FLAC、MP3、MP4形式に対応しています'
+        - '他の形式をご利用する場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください'
+      browse: '参照'
+      required: '必須'
+      optional: '省略可'
+      create: '文字起こしする'
+      modal:
+        name: '登録する文字起こしの名前です。何の音声ファイルを登録したのかのメモとしてご利用ください。'
+        audio: '文字起こしする音声ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。'
+    shared:
       qa:
         title: 'よくある質問'
         desc_html: '文字起こしAIについて、よくお問い合わせいただく内容を掲載しています。分からない点や気になる点は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご質問ください。'
@@ -107,6 +130,7 @@ ja:
           - '文字起こしの品質はどれくらいですか？'
           - 'セキュリティは大丈夫ですか？'
           - 'ログインすると何が違いますか？'
+          - 'どのタイミングから有料版になりますか？'
           - '無料版と有料版では何が違いますか？'
           - '有料版を使う方法を教えてください'
           - '返金はしてもらえますか？'
@@ -126,79 +150,21 @@ ja:
           - 'TLS/SSLを使用した最高水準のセキュリティを備えています。登録した音声または動画ファイルは暗号化して安全に管理されており、文字起こしAIの用途でしか利用されません。'
           - 'ログインしている時としていない時では、文字起こし結果の保存期間が違います。保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。'
           - |
+            勝手に有料版になることはありませんのでご安心ください。無料で文字起こしできる%{duration}を超えるまでは無料のままです。%{duration}を超えると、次の文字起こしの時に支払い方法の選択画面が表示されます。
+            この時に正しい支払い方法を入力すると、次回以降は有料版を使うことができます。
+          - |
             <div style="position: relative;">
               <div id="pricing_table" style="position: absolute; margin-top: -100px;"></div>
             </div>
             無料版ですと、無料で%{duration}まで文字起こしを作成できます。有料版になると、%{price}で%{duration}を超えて文字起こしを作成出来るようになります。他にも下記の違いがあります。
             さらにご質問したい場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
-            <table class="table table-bordered mt-4">
-              <caption>無料版と有料版の違い</caption>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th style="font-weight: normal;">無料版</th>
-                  <th><i class="text-primary fas fa-check"></i> 有料版</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>時間あたりの価格</td>
-                  <td>無料</td>
-                  <td class="text-primary">%{price}</td></tr>
-                <tr>
-                  <td>文字起こしできる量</td>
-                  <td>%{duration}まで</td>
-                  <td class="text-primary">無制限</td></tr>
-                <tr>
-                  <td>1ファイルあたりの時間</td>
-                  <td>60分まで</td>
-                  <td class="text-primary">無制限</td></tr>
-                <tr>
-                  <td>利用できるファイル形式</td>
-                  <td>音声ファイルのみ</td>
-                  <td class="text-primary">音声または動画ファイル</td></tr>
-                <tr>
-                  <td>1ファイルあたりのサイズ</td>
-                  <td>120MBまで</td>
-                  <td class="text-primary">無制限</td></tr>
-                <tr>
-                  <td>保存できるファイル数</td>
-                  <td>10個まで</td>
-                  <td class="text-primary">無制限</td></tr>
-                <tr>
-                  <td>保存できる期間</td>
-                  <td>%{guest}〜%{login}</td>
-                  <td class="text-primary">%{paid}</td></tr>
-                <tr>
-                  <td>支払い方法</td>
-                  <td></td>
-                  <td>クレジットカード・銀行振込</td></tr>
-              </tbody>
-            </table>
+            %{pricing_table}
           - |
-            <a class="btn btn-primary text-white">ログイン</a>してください。ログインするだけであれば無料版のままです。最初の%{duration}を使い終わると、次に音声またはビデオファイルを登録する時に、
+            まずはじめに <a href="/users/sign_up">ログイン</a> してください。ログインするだけであれば無料版のままです。最初の%{duration}を使い終わると、次に音声またはビデオファイルを登録する時に、
             支払い方法を入力する画面になります。ここで入力した支払い方法が正しければ、有料版の利用が開始されます。
           - |
             最初の%{duration}は無料でお使いいただけますので、その際に品質をお確かめください。その後、有料版を使った後に品質に納得がいかない場合は、
             当社所定のアンケートにお応えいただければ返金対応いたします。
-    create:
-      created: '%{at} に作成'
-    form:
-      name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
-      name_hints:
-        - '省略した場合は作成日時が自動的に入力されます'
-      choose_file: 'クリックして音声または動画ファイルを選択する'
-      audio_hints_html:
-        - '無料版では、<strong>1つのファイルにつき最大で60分</strong>まで文字起こしできます'
-        - 'WAV、FLAC、MP3、MP4形式に対応しています'
-        - '他の形式をご利用する場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください'
-      browse: '参照'
-      required: '必須'
-      optional: '省略可'
-      create: '文字起こしする'
-      modal:
-        name: '登録する文字起こしの名前です。何の音声ファイルを登録したのかのメモとしてご利用ください。'
-        audio: '文字起こしする音声ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。'
   activerecord:
     models:
       request:

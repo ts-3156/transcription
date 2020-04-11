@@ -1,0 +1,40 @@
+<%= gradient_header do %>
+  <div class="container mt-lg-5">
+    <div class="row align-items-lg-center">
+
+      <div class="col-lg-6 offset-lg-3">
+        <div class="bg-white shadow-sm rounded my-auto p-5">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+            <div class="mb-4">
+              <h2 class="h4 text-center">無料でログインする</h2>
+            </div>
+
+            <div class="mb-3">
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', required: true, placeholder: "メールアドレス", 'aria-label': "メールアドレス" %>
+            </div>
+
+            <div class="mb-3">
+              <%= f.password_field :password, autocomplete: "current-password", class: 'form-control', required: true, placeholder: "パスワード", 'aria-label': "パスワード" %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+              <div class="custom-control custom-checkbox mb-3">
+                <%= f.check_box :remember_me, class: 'custom-control-input' %>
+                <%= f.label :remember_me, class: 'custom-control-label' %>
+              </div>
+            <% end %>
+
+            <button type="submit" class="btn btn-block btn-primary">この内容でログインする</button>
+          <% end %>
+
+          <div class="mb-3"></div>
+          <%= render "users/shared/links" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="container mt-5">
+  <%= render partial: 'requests/shared/qa' %>
+</div>

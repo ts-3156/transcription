@@ -1,0 +1,12 @@
+<h2 class="h3 mt-4"><%= t('.title') %></h2>
+<div class="my-5"><%= t('.desc_html') %></div>
+
+<% translation_options = expiration_kinds.merge(
+    price: t('layouts.application.price_per_minute'),
+    duration: t('layouts.application.free_duration'),
+    pricing_table: render(partial: 'requests/shared/pricing_table')) %>
+
+<% t('.questions').zip(t('.answers_html', translation_options)).each.with_index do |(question, answer), i| %>
+  <div class="text-primary"><%= i + 1 %>. <%= question %></div>
+  <div class="mt-2 mb-5"><%= answer %></div>
+<% end %>

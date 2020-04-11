@@ -6,7 +6,11 @@ module AudiosHelper
     elsif duration < 3600
       t('datetime.distance_in_words.x_minutes.other', count: duration / 60)
     else
-      t('datetime.distance_in_words.about_x_hours.other', count: duration / 3600) + duration_text(duration % 3600)
+      if duration % 3600 == 0
+        t('datetime.distance_in_words.about_x_hours.other', count: duration / 3600)
+      else
+        t('datetime.distance_in_words.about_x_hours.other', count: duration / 3600) + duration_text(duration % 3600)
+      end
     end
   end
 

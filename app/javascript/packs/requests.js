@@ -1,26 +1,3 @@
-(function ($) {
-  $('[data-toggle="tooltip"]').tooltip();
-  $('[data-toggle="popover"]').popover();
-
-  $(".popover-dismiss").popover({
-    trigger: "focus"
-  });
-
-  var navbarCollapse = function () {
-    if ($(".navbar.fixed-top").length === 0) {
-      return;
-    }
-    if ($(".navbar.fixed-top").offset().top > 0) {
-      $(".navbar").addClass("navbar-scrolled");
-    } else {
-      $(".navbar").removeClass("navbar-scrolled");
-    }
-  };
-  navbarCollapse();
-  $(window).scroll(navbarCollapse);
-
-})(jQuery);
-
 class Form {
   constructor() {
     this.$el = $('#model_form');
@@ -75,8 +52,8 @@ class NameField {
     var val = this.val();
     console.log('Start name validation', val);
 
-    if (Util.countChars(val) > 200) {
-      this.errors.push('文字起こしの名前は200文字以内にしてください。');
+    if (Util.countChars(val) > 50) {
+      this.errors.push('名前メモは50文字以内にしてください。');
     }
 
     return this.errors.length === 0;
@@ -178,12 +155,4 @@ class Util {
 
 $(function () {
   var form = new Form();
-
-  // Smooth scrolling when clicking an anchor link
-  $('a[href^="#"]').click(function () {
-    $('html, body').animate({
-      scrollTop: $($(this).attr('href')).offset().top
-    }, 500);
-    return false;
-  });
 });

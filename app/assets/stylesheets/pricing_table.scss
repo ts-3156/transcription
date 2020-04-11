@@ -1,0 +1,14 @@
+.table-pricing {
+  box-shadow: 2rem 0 1rem -1rem rgba(0, 0, 0, .15); // right
+
+  th, td {
+    width: 250px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  th:nth-child(3), td:nth-child(3) {
+    color: white;
+    background-color: #007bff !important;
+  }
+}

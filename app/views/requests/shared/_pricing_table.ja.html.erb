@@ -1,0 +1,46 @@
+<table class="table table-pricing table-hover table-borderless mt-5">
+  <thead>
+  <tr>
+    <th></th>
+    <th style="font-weight: normal;">無料版</th>
+    <th><i class="text-primary fas fa-check"></i> <span>有料版</span></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>時間あたりの価格</td>
+    <td>無料</td>
+    <td>
+      <span class="h1"><%= t('layouts.application.price_per_minute_price') %></span>
+      <span><%= t('layouts.application.price_per_minute_unit') %></span>
+    </td></tr>
+  <tr>
+    <td>文字起こしできる量</td>
+    <td><%= t('layouts.application.free_duration') %>まで</td>
+    <td>無制限</td></tr>
+  <tr>
+    <td>1ファイルあたりの時間</td>
+    <td>60分まで</td>
+    <td>無制限</td></tr>
+  <tr>
+    <td>利用できるファイル形式</td>
+    <td>音声ファイルのみ</td>
+    <td>音声または動画ファイル</td></tr>
+  <tr>
+    <td>1ファイルあたりのサイズ</td>
+    <td>120MBまで</td>
+    <td>無制限</td></tr>
+  <tr>
+    <td>保存できるファイル数</td>
+    <td>10個まで</td>
+    <td>無制限</td></tr>
+  <tr>
+    <td>保存できる期間</td>
+    <td><%= t('layouts.application.expiration_for.guest') %>〜<%= t('layouts.application.expiration_for.login') %></td>
+    <td><%= t('layouts.application.expiration_for.paid') %></td></tr>
+  <tr>
+    <td>支払い方法</td>
+    <td></td>
+    <td>クレジットカード・銀行振込</td></tr>
+  </tbody>
+</table>
