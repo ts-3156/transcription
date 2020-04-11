@@ -1,5 +1,5 @@
 <% content_for :title, t('.meta.title') %>
-<% content_for :description, t('.meta.description', price: t('layouts.application.price_per_minute')) %>
+<% content_for :description, t('.meta.description', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %>
 <%- model_class = Request -%>
 
 
@@ -26,12 +26,12 @@
   </div>
 
   <h2 class="h3 mt-5"><%= t('.reason_for_choosing.title') %></h2>
-  <div class="my-5"><%= t('.reason_for_choosing.desc', price: t('layouts.application.price_per_minute')) %></div>
+  <div class="my-5"><%= t('.reason_for_choosing.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
 
   <div class="container">
     <div class="row text-center">
       <div class="col-lg-4 mb-5">
-        <h5 class="mb-3"><%= t('.reason_for_choosing.price') %></h5>
+        <h5 class="mb-3"><%= t('.reason_for_choosing.price', duration: t('layouts.application.free_duration')) %></h5>
         <img class="img-fluid rounded-lg shadow" src="<%= image_path '/reason_for_choosing_price.png' %>"/>
         <div class="mt-2"><%= t('.reason_for_choosing.price_other') %></div>
       </div>
@@ -54,14 +54,15 @@
     <div id="create_request" style="position: absolute; margin-top: -100px;"></div>
   </div>
   <h2 class="h3 mt-5"><%= t('.create.title') %></h2>
-  <div class="my-5"><%= t('.create.desc') %></div>
+  <div class="text-primary my-5"><%= t('.create.appeal', remaining: remaining_duration_text(@requests)) %></div>
+  <div class="my-5"><%= t('.create.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
 
   <%= render :partial => 'form' %>
 
   <hr>
 
   <h2 class="h3 mt-4"><%= t('.list.title') %></h2>
-  <div class="my-5"><%= t('.list.desc') %></div>
+  <div class="my-5"><%= t('.list.desc', expiration_kinds) %></div>
 
   <table class="table table-striped">
     <thead>
@@ -126,6 +127,10 @@
     </tbody>
   </table>
 
+  <% t('.list.notices', expiration_kinds).each do |message| %>
+    <div class="text-muted my-5"><%= message %></div>
+  <% end %>
+
   <hr>
 
   <div style="position: relative;">
@@ -149,7 +154,7 @@
   <h2 class="h3 mt-4"><%= t('.qa.title') %></h2>
   <div class="my-5"><%= t('.qa.desc_html') %></div>
 
-  <% t('.qa.questions').zip(t('.qa.answers_html', price: t('layouts.application.price_per_minute'))).each.with_index do |(question, answer), i| %>
+  <% t('.qa.questions').zip(t('.qa.answers_html', expiration_kinds.merge(price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')))).each.with_index do |(question, answer), i| %>
     <div class="text-primary"><%= i + 1 %>. <%= question %></div>
     <div class="mt-2 mb-5"><%= answer %></div>
   <% end %>
@@ -157,7 +162,7 @@
   <hr>
 
   <h2 class="h3 mt-4"><%= t('.inquiry.title') %></h2>
-  <div class="my-5"><%= t('.inquiry.desc_html', price: t('layouts.application.price_per_minute')) %></div>
+  <div class="my-5"><%= t('.inquiry.desc_html', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
 
 </div>
 
@@ -165,4 +170,4 @@
 <%= modal_dialog(id: 'hint_request_audio', title: model_class.human_attribute_name(:audio), body: t('.modal.audio')) %>
 <%= modal_dialog(id: 'hint_request_output', title: model_class.human_attribute_name(:output), body: t('.modal.output')) %>
 <%= modal_dialog(id: 'hint_request_created_at', title: model_class.human_attribute_name(:created_at), body: t('.modal.created_at')) %>
-<%= modal_dialog(id: 'hint_request_expires_at', title: model_class.human_attribute_name(:expires_at), body: t('.modal.expires_at')) %>
+<%= modal_dialog(id: 'hint_request_expires_at', title: model_class.human_attribute_name(:expires_at), body: t('.modal.expires_at', expiration_kinds)) %>
