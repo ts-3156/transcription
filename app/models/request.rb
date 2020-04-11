@@ -1,4 +1,5 @@
 class Request < ApplicationRecord
+  belongs_to :requestable, polymorphic: true, optional: true
   has_one :audio
   has_one :transcript
 

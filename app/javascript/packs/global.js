@@ -29,3 +29,22 @@ $('a[href^="#"]').click(function () {
   }, 500);
   return false;
 });
+
+class SnackMessage {
+  constructor() {
+  }
+
+  static show(message) {
+    var options = {
+      actionText: '&times;',
+      actionTextColor: '#777',
+      backgroundColor: '#eee',
+      pos: 'top-center',
+      duration: 7500,
+      text: message
+    };
+    Snackbar.show(options);
+  }
+}
+
+window.SnackMessage = SnackMessage;

@@ -83,12 +83,6 @@
     <thead>
     <tr>
       <th>
-        <%= model_class.human_attribute_name(:name) %>
-        <%= modal_trigger(target: '#hint_request_name') do %>
-          <i class="text-muted far fa-question-circle"></i>
-        <% end %>
-      </th>
-      <th>
         <%= model_class.human_attribute_name(:audio) %>
         <%= modal_trigger(target: '#hint_request_audio') do %>
           <i class="text-muted far fa-question-circle"></i>
@@ -119,7 +113,6 @@
       <% audio = request.audio %>
       <% transcript = request.transcript %>
       <tr>
-        <td><%= request.name %></td>
         <td>
           <% if audio.blob.attached? %>
             <%= link_to audio.filename, url_for(audio.blob) %> <%= duration_text(audio.duration) %>
@@ -175,7 +168,6 @@
 
 </div>
 
-<%= modal_dialog(id: 'hint_request_name', title: model_class.human_attribute_name(:name), body: t('.modal.name')) %>
 <%= modal_dialog(id: 'hint_request_audio', title: model_class.human_attribute_name(:audio), body: t('.modal.audio')) %>
 <%= modal_dialog(id: 'hint_request_output', title: model_class.human_attribute_name(:output), body: t('.modal.output')) %>
 <%= modal_dialog(id: 'hint_request_created_at', title: model_class.human_attribute_name(:created_at), body: t('.modal.created_at')) %>

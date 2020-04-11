@@ -103,6 +103,7 @@ ja:
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
     create:
       created: '%{at} に作成'
+      successfully_created: '%{name} が登録されました。'
     form:
       name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
       name_hints:
