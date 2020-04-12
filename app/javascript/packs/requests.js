@@ -134,6 +134,10 @@ class Util {
   }
 
   static countChars(str) {
+    if (!str) {
+      return -1;
+    }
+
     var len = 0;
     str = str.split("");
 

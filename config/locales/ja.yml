@@ -4,15 +4,13 @@ ja:
     application:
       brand_html: '文字起こしAI <small>無料版</small>'
       brand_without_free: '文字起こしAI'
-      free_duration: '10時間'
-      free_duration_seconds: 36000
       price_per_minute: '10円/分'
       price_per_minute_price: '10円'
       price_per_minute_unit: '/分'
-      expiration_for:
-        guest: '7日間'
-        login: '30日間'
-        paid: '1年間'
+      user_plan:
+        guest: 'ゲスト'
+        login: 'ログイン'
+        paid: '有料プラン'
       free_trial: '無料で文字起こしする'
       sign_up: '新規登録'
       sign_in: 'ログイン'
@@ -71,14 +69,22 @@ ja:
         trouble_other: '他社事例：ライターに修正箇所を都度連絡'
       create:
         title: '文字起こしAIを無料で試す'
-        appeal: 'あと %{remaining} まで無料でご利用いただけます。'
+        remaining: 'あと %{remaining} まで無料でご利用いただけます。'
+        limited_html: '無料の %{duration} を使い切りました。<a href="/users/sign_up">ログイン</a> して、有料版をお使いください。'
         desc: |
           音声ファイルを指定することで、会議録、議事録、インタビューの文字起こしを作成します。%{duration}までは無料でご利用できます。
           無料で使える%{duration}を超えた後は、%{price}でご利用いただけます。
       list:
         title: '作成した文字起こしの一覧'
-        desc: 'これまでに作成した文字起こしの一覧を表示しています。登録した文字起こしの保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。'
+        remaining: '音声または動画ファイルはあと %{remaining}個 まで無料でご利用いただけます。'
+        limited_html: '登録できるファイル数の上限を超えました。さらに文字起こしを行うには、<a href="/users/sign_up">ログイン</a> して、有料版をお使いください。'
+        desc: |
+          これまでに作成した文字起こしの一覧を表示しています。あなたは【%{plan}】です。登録できる音声または動画ファイルの数は%{count}、
+          登録した文字起こしの保存期間は%{expiration}です。
         notices_html:
+          - |
+            登録できる音声または動画ファイルの数は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。
+            登録できるファイル数を増やすには <a href="/users/sign_up">ログイン</a> してください。
           - |
             ファイルの保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。
             ファイルの保存期間を長くするには <a href="/users/sign_up">ログイン</a> してください。
@@ -102,8 +108,9 @@ ja:
           文字起こしAIについて、質問やご要望は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
     create:
-      created: '%{at} に作成'
       successfully_created: '%{name} が登録されました。'
+      files_count_limited: '登録できるファイル数の上限を超えています。'
+      duration_limited: '作成できる文字起こし時間の上限を超えています。'
     form:
       name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
       name_hints:

@@ -34,35 +34,6 @@
     </div>
   </div>
 
-  <div class="row mt-5">
-    <div class="col-lg-6">
-      <%= f.label :name, :class => 'control-label' %>
-      <%= modal_trigger(target: '#form_request_name') do %>
-        <i class="text-muted far fa-question-circle"></i>
-      <% end %>
-      <span class="text-muted"><%= t('.optional') %></span>
-
-      <%= f.text_field :name, id: 'model_form_name', placeholder: t('.name_placeholder'), :class => 'form-control' %>
-
-      <div id="model_form_name_errors" class="form-text invalid-feedback" style="display: none;">
-        <ul>
-          <% @request.errors[:name].each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-    <div class="col">
-      <ul class="list-unstyled">
-        <% t('.name_hints').each do |hint| %>
-          <li>
-            <div class="text-muted" style="font-size: small;">&sdot;<%= hint %></div>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-
   <div class="form-group my-5">
     <%= f.submit t('.create'), id: 'model_form_submit', :class => 'btn btn-primary' %>
   </div>

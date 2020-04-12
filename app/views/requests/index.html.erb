@@ -19,31 +19,35 @@
 <% end %>
 
 <div class="container">
-
   <h2 class="h3 mt-5"><%= t('.use_case.title') %></h2>
   <div class="my-5"><%= t('.use_case.desc') %></div>
 
-  <div class="container">
-    <div class="row text-center">
-      <div class="col-lg-4 mb-5">
-        <h5 class="mb-3"><%= t('.use_case.interview') %></h5>
-        <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_interview.png' %>"/>
-      </div>
-      <div class="col-lg mb-5">
-        <h5 class="mb-3"><%= t('.use_case.meeting') %></h5>
-        <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_meeting.png' %>"/>
-      </div>
-      <div class="col-lg mb-5">
-        <h5 class="mb-3"><%= t('.use_case.seminar') %></h5>
-        <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_seminar.png' %>"/>
-      </div>
+  <div class="row text-center">
+    <div class="col-lg-4 mb-5">
+      <h5 class="mb-3"><%= t('.use_case.interview') %></h5>
+      <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_interview.png' %>"/>
+    </div>
+    <div class="col-lg mb-5">
+      <h5 class="mb-3"><%= t('.use_case.meeting') %></h5>
+      <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_meeting.png' %>"/>
+    </div>
+    <div class="col-lg mb-5">
+      <h5 class="mb-3"><%= t('.use_case.seminar') %></h5>
+      <img class="img-fluid rounded-lg shadow" src="<%= image_path '/use_case_seminar.png' %>"/>
     </div>
   </div>
 
-  <h2 class="h3 mt-5"><%= t('.reason_for_choosing.title') %></h2>
-  <div class="my-5"><%= t('.reason_for_choosing.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
+  <div class="mx-auto text-center">
+    <a href="#create_request" class="btn btn-lg btn-primary"><%= t('.page_header.free_trial') %></a>
+  </div>
+</div>
 
+
+<div class="bg-gradient-white-to-gray" style="position: relative; padding-bottom: 80px;">
   <div class="container">
+    <h2 class="h3 mt-5"><%= t('.reason_for_choosing.title') %></h2>
+    <div class="my-5"><%= t('.reason_for_choosing.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
+
     <div class="row text-center">
       <div class="col-lg-4 mb-5">
         <h5 class="mb-3"><%= t('.reason_for_choosing.price', duration: t('layouts.application.free_duration')) %></h5>
@@ -61,111 +65,159 @@
         <div class="mt-2"><%= t('.reason_for_choosing.trouble_other') %></div>
       </div>
     </div>
-  </div>
 
-  <hr>
-
-  <div style="position: relative;">
-    <div id="create_request" style="position: absolute; margin-top: -100px;"></div>
-  </div>
-  <h2 class="h3 mt-5"><%= t('.create.title') %></h2>
-  <div class="text-primary my-5"><%= t('.create.appeal', remaining: remaining_duration_text(@requests)) %></div>
-  <div class="my-5"><%= t('.create.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
-
-  <%= render :partial => 'form' %>
-
-  <hr>
-
-  <h2 class="h3 mt-4"><%= t('.list.title') %></h2>
-  <div class="my-5"><%= t('.list.desc', expiration_kinds) %></div>
-
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>
-        <%= model_class.human_attribute_name(:audio) %>
-        <%= modal_trigger(target: '#hint_request_audio') do %>
-          <i class="text-muted far fa-question-circle"></i>
-        <% end %>
-      </th>
-      <th>
-        <%= model_class.human_attribute_name(:output) %>
-        <%= modal_trigger(target: '#hint_request_output') do %>
-          <i class="text-muted far fa-question-circle"></i>
-        <% end %>
-      </th>
-      <th>
-        <%= model_class.human_attribute_name(:created_at) %>
-        <%= modal_trigger(target: '#hint_request_created_at') do %>
-          <i class="text-muted far fa-question-circle"></i>
-        <% end %>
-      </th>
-      <th>
-        <%= model_class.human_attribute_name(:expires_at) %>
-        <%= modal_trigger(target: '#hint_request_expires_at') do %>
-          <i class="text-muted far fa-question-circle"></i>
-        <% end %>
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @requests.each do |request| %>
-      <% audio = request.audio %>
-      <% transcript = request.transcript %>
-      <tr>
-        <td>
-          <% if audio.blob.attached? %>
-            <%= link_to audio.filename, url_for(audio.blob) %> <%= duration_text(audio.duration) %>
-          <% else %>
-            <%= audio.filename %>
-          <% end %>
-        </td>
-        <td>
-          <% if transcript.blob.attached? %>
-            <div><%= link_to t('.download'), url_for(transcript.blob) %> <%= t('.x_characters', count: transcript.character_count) %></div>
-            <div style="font-size: small; overflow: hidden;" class="text-muted"><%= transcript.summary.truncate(50) %></div>
-          <% else %>
-            <%= t(".status.#{transcript.status}") %>
-          <% end %>
-        </td>
-        <td><%= l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
-        <td><%= distance_of_time_in_words_to_now((request.created_at + 30.days).in_time_zone('Tokyo')) %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <% t('.list.notices_html', expiration_kinds).each do |message| %>
-    <div class="text-muted my-5"><%= message %></div>
-  <% end %>
-
-  <hr>
-
-  <div style="position: relative;">
-    <div id="how_to_use" style="position: absolute; margin-top: -100px;"></div>
-  </div>
-  <h2 id="how_to_use" class="h3 mt-4"><%= t('.how_to_use.title') %></h2>
-  <div class="my-5"><%= t('.how_to_use.desc') %></div>
-
-  <% t('.how_to_use.titles').zip(t('.how_to_use.texts'), t('.how_to_use.images')).each.with_index do |(title, text, image), i| %>
-    <div class="row mb-5">
-      <div class="col-lg-6">
-        <div class="text-primary"><%= i + 1 %>. <%= title %></div>
-        <div class="mt-2"><%= text %></div>
-      </div>
-      <div class="col shadow"><img style="width: 100%;" src="<%= image_path image %>" alt=""></div>
+    <div class="mx-auto text-center">
+      <a href="#create_request" class="btn btn-lg btn-primary"><%= t('.page_header.free_trial') %></a>
     </div>
-  <% end %>
+  </div>
+
+  <div class="svg-border-rounded text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor">
+      <path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path>
+    </svg>
+  </div>
+</div>
+
+<div style="background-color: #fff; position: relative; padding-bottom: 80px;">
+  <div class="container">
+    <div style="position: relative;">
+      <div id="create_request" style="position: absolute; margin-top: -100px;"></div>
+    </div>
+    <h2 class="h3 mt-5"><%= t('.create.title') %></h2>
+
+    <% if @user.total_duration_limited? %>
+      <%# TODO if user_signed_in? %>
+      <div class="text-danger my-5"><%= t('.create.limited_html', duration: t('layouts.application.free_duration')) %></div>
+    <% else %>
+      <div class="text-primary my-5"><%= t('.create.remaining', remaining: remaining_duration_text(@requests, fake: @fake_requests)) %></div>
+    <% end %>
+
+    <div class="my-5"><%= t('.create.desc', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
+
+    <%= render :partial => 'form' %>
+  </div>
 
   <hr>
 
+  <div class="container">
+    <h2 class="h3 mt-4"><%= t('.list.title') %></h2>
+
+    <% if @user.files_count_limited? %>
+      <%# TODO if user_signed_in? %>
+      <div class="text-danger my-5"><%= t('.list.limited_html', duration: t('layouts.application.free_duration')) %></div>
+    <% else %>
+      <div class="text-primary my-5"><%= t('.list.remaining', remaining: @user.remaining_files_count) %></div>
+    <% end %>
+
+    <% plan = current_user_plan %>
+    <div class="my-5"><%= t('.list.desc', plan: current_user_plan_text, expiration: expiration_kinds[plan], count: files_count_kinds[plan]) %></div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>
+          <%= model_class.human_attribute_name(:audio) %>
+          <%= modal_trigger(target: '#hint_request_audio') do %>
+            <i class="text-muted far fa-question-circle"></i>
+          <% end %>
+        </th>
+        <th>
+          <%= model_class.human_attribute_name(:output) %>
+          <%= modal_trigger(target: '#hint_request_output') do %>
+            <i class="text-muted far fa-question-circle"></i>
+          <% end %>
+        </th>
+        <th>
+          <%= model_class.human_attribute_name(:created_at) %>
+          <%= modal_trigger(target: '#hint_request_created_at') do %>
+            <i class="text-muted far fa-question-circle"></i>
+          <% end %>
+        </th>
+        <th>
+          <%= model_class.human_attribute_name(:expires_at) %>
+          <%= modal_trigger(target: '#hint_request_expires_at') do %>
+            <i class="text-muted far fa-question-circle"></i>
+          <% end %>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @requests.each do |request| %>
+        <% audio = request.audio %>
+        <% transcript = request.transcript %>
+        <tr>
+          <td>
+            <% if audio.blob.attached? %>
+              <%= link_to audio.filename, url_for(audio.blob) %> <%= duration_text(audio.duration) %>
+            <% else %>
+              <%= audio.filename %>
+            <% end %>
+          </td>
+          <td>
+            <% if transcript.blob.attached? %>
+              <div><%= link_to t('.download'), url_for(transcript.blob) %> <%= t('.x_characters', count: transcript.character_count) %></div>
+              <div style="font-size: small; overflow: hidden;" class="text-muted"><%= transcript.summary.truncate(50) %></div>
+            <% else %>
+              <%= t(".status.#{transcript.status}") %>
+            <% end %>
+          </td>
+          <td><%= l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
+          <td><%= distance_of_time_in_words_to_now((request.created_at + 30.days).in_time_zone('Tokyo')) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <div class="text-muted my-5"><%= t('.list.notices_html', files_count_kinds)[0] %></div>
+    <div class="text-muted"><%= t('.list.notices_html', expiration_kinds)[1] %></div>
+  </div>
+
+  <div class="svg-border-rounded" style="color: #EFf3F9;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor">
+      <path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path>
+    </svg>
+  </div>
+</div>
+
+<div class="pt-5" style="background-color: #EFf3F9; position: relative; padding-bottom: 80px;">
+  <div class="container">
+    <div style="position: relative;">
+      <div id="how_to_use" style="position: absolute; margin-top: -100px;"></div>
+    </div>
+    <h2 class="h3"><%= t('.how_to_use.title') %></h2>
+    <div class="my-5"><%= t('.how_to_use.desc') %></div>
+
+    <% t('.how_to_use.titles').zip(t('.how_to_use.texts'), t('.how_to_use.images')).each.with_index do |(title, text, image), i| %>
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <div class="text-primary"><%= i + 1 %>. <%= title %></div>
+          <div class="mt-2"><%= text %></div>
+        </div>
+        <div class="col shadow"><img style="width: 100%;" src="<%= image_path image %>" alt=""></div>
+      </div>
+    <% end %>
+
+    <div class="mx-auto text-center">
+      <a href="#create_request" class="btn btn-lg btn-primary"><%= t('.page_header.free_trial') %></a>
+    </div>
+  </div>
+
+  <div class="svg-border-rounded text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144.54 17.34" preserveAspectRatio="none" fill="currentColor">
+      <path d="M144.54,17.34H0V0H144.54ZM0,0S32.36,17.34,72.27,17.34,144.54,0,144.54,0"></path>
+    </svg>
+  </div>
+</div>
+
+<div class="container">
   <%= render partial: 'requests/shared/qa' %>
+</div>
 
-  <hr>
+<hr>
 
+<div class="container">
   <h2 class="h3 mt-4"><%= t('.inquiry.title') %></h2>
   <div class="my-5"><%= t('.inquiry.desc_html', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %></div>
-
 </div>
 
 <%= modal_dialog(id: 'hint_request_audio', title: model_class.human_attribute_name(:audio), body: t('.modal.audio')) %>

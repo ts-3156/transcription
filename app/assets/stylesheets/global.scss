@@ -3,6 +3,11 @@
   background-image: linear-gradient(#DE6262 0%, #FFB88C 100%);
 }
 
+.bg-gradient-white-to-gray {
+  background-color: #FFF;
+  background-image: linear-gradient(#FFF 0%, #EFf3F9 100%);
+}
+
 .navbar {
   -webkit-transition: background-color 0.5s ease-in-out;
   transition: background-color 0.5s ease-in-out;

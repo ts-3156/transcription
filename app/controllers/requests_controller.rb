@@ -1,12 +1,27 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!, only: :show
   before_action :reject_crawler!, only: :create
+  before_action only: :create do
+    user = current_user_or_guest
+    if user.files_count_limited?
+      flash[:notice] = t('.create.files_count_limited')
+      redirect_to action: :index
+    elsif user.total_duration_limited?
+      flash[:notice] = t('.create.duration_limited')
+      redirect_to action: :index
+    end
+  end
 
   def index
-    if (user = current_user_or_guest)
-      @requests = user.requests.includes(audio: :blob_blob, transcript: :blob_blob).order(created_at: :desc).limit(10)
+    @user = current_user_or_guest
+    records = @user.requests.includes(audio: :blob_blob, transcript: :blob_blob).order(created_at: :desc)
+    @requests = records.reject(&:expired?).take(10)
+
+    if @requests.blank?
+      @requests = Request.where(id: [1, 2, 3]).order(created_at: :desc)
+      @fake_requests = true
     end
-    @requests = Request.where(id: [1, 2, 3]) if @requests.blank?
+
     @request = Request.new
   end
 
@@ -15,8 +30,7 @@ class RequestsController < ApplicationController
   end
 
   def create
-    @request = Request.new(name: params['request']['name'])
-    @request.name = t('.created', at: l(Time.zone.now.in_time_zone('Tokyo'), format: :short)) if @request.name.blank?
+    @request = Request.new
 
     # TODO uploaded_file.valid? && @request.valid?
     uploaded_file = UploadedFile.new(params['request']['audio'])
@@ -48,6 +62,8 @@ class RequestsController < ApplicationController
       current_guest
     elsif create
       create_new_guest
+    else
+      Guest.new
     end
   end
 end
