@@ -3,10 +3,9 @@ class Form {
     this.$el = $('#model_form');
     this.name = new NameField();
     this.audio = new FileField();
-    this.$submit = $('#model_form_submit');
 
     var self = this;
-    this.$submit.on('click', function (e) {
+    $('#model_form_submit').on('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -72,18 +71,28 @@ class NameField {
 class FileField {
   constructor() {
     this.$el = $('#model_form_audio');
+    this.$filename_container = null;
     this.$errors_container = $('#model_form_audio_errors');
     this.errors = [];
 
     var self = this;
     this.$el.on('change', function () {
-      var files = self.files();
-      if (files.length !== 1) {
-        console.warn('files.length is not 1.', files.length);
-        return;
-      }
+      self.$filename_container = $('#audio_filename');
+      self.$filename_container.empty().hide();
+      self.$errors_container.empty().hide();
 
-      $(this).next('.custom-file-label').text(files[0].name).removeClass('text-muted');
+      var files = self.files();
+      console.log(files);
+
+      if (files.length !== 1) {
+        $('#audio_browse_file').show();
+      } else {
+        $('#audio_browse_file').hide();
+        self.$filename_container.text(files[0].name).show();
+        if (!self.validate()) {
+          self.displayErrors();
+        }
+      }
     });
   }
 
@@ -125,7 +134,15 @@ class FileField {
     } else {
       var message = this.errors.join('<br>');
       this.$errors_container.html(message).show();
+      this.shake(this.$errors_container);
     }
+  }
+
+  shake($elem) {
+    $elem.addClass('shake');
+    setTimeout(function () {
+      $elem.removeClass('shake');
+    }, 500);
   }
 }
 
@@ -158,5 +175,5 @@ class Util {
 }
 
 $(function () {
-  var form = new Form();
+  window.request_form = new Form();
 });

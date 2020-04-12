@@ -1,19 +1,18 @@
 <%= javascript_pack_tag 'requests' %>
+<%= javascript_pack_tag 'filer' %>
 
 <%= form_with model: @request, local: true, html: {id: 'model_form', class: "request"} do |f| %>
 
-  <div class="row">
+  <div class="row align-items-center">
     <div class="col-lg-6">
-      <%= f.label :audio, :class => 'control-label' %>
-      <%= modal_trigger(target: '#form_request_audio') do %>
-        <i class="text-muted far fa-question-circle"></i>
-      <% end %>
-      <span class="text-danger"><%= t('.required') %></span>
-
-      <div class="custom-file">
-        <%= f.file_field :audio, id: 'model_form_audio', class: 'custom-file-input', required: true %>
-        <label class="custom-file-label text-muted" for="audio" data-browse="<%= t('.browse') %>"><%= t('.choose_file') %></label>
+      <div class="text-center">
+        <%= f.label :audio %>
+        <%= modal_trigger(target: '#form_request_audio') do %>
+          <i class="text-muted far fa-question-circle"></i>
+        <% end %>
       </div>
+
+      <%= f.file_field :audio, id: 'model_form_audio', required: true %>
 
       <div id="model_form_audio_errors" class="invalid-feedback form-text" style="display: none;">
         <ul>
@@ -27,17 +26,18 @@
       <ul class="list-unstyled">
         <% t('.audio_hints_html').each do |hint| %>
           <li>
-            <div class="text-muted mb-1" style="font-size: small;">&sdot;<%= hint %></div>
+            <div class="text-muted mb-3" style="font-size: small;">&sdot;<%= hint %></div>
           </li>
         <% end %>
       </ul>
     </div>
   </div>
 
-  <div class="form-group my-5">
-    <%= f.submit t('.create'), id: 'model_form_submit', :class => 'btn btn-primary' %>
+  <div class="row text-center my-5">
+    <div class="col">
+      <%= f.submit t('.create'), id: 'model_form_submit', :class => 'btn btn-lg btn-primary' %>
+    </div>
   </div>
-
 <% end %>
 
 <%= modal_dialog(id: 'form_request_name', title: Request.human_attribute_name(:name), body: t('.modal.name')) %>
