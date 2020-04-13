@@ -1,5 +1,9 @@
 yum update -y
 
+# vi /etc/selinux/config
+SELINUX=disabled
+# shutdown -r now
+
 # https://dev.mysql.com/downloads/repo/yum/
 rpm -ivh https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
 yum remove -y mariadb-libs
