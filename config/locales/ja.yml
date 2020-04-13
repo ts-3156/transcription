@@ -109,21 +109,19 @@ ja:
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
     create:
       successfully_created: '%{name} が登録されました。'
-      files_count_limited: '登録できるファイル数の上限を超えています。'
-      duration_limited: '作成できる文字起こし時間の上限を超えています。'
     form:
       name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
       name_hints:
         - '省略した場合は作成日時が自動的に入力されます'
       choose_file: 'クリックして音声または動画ファイルを選択する'
       audio_hints_html:
-        - '無料版では、<strong>1つのファイルにつき最大で60分</strong>まで文字起こしできます'
+        - '無料版では、<strong>1つのファイルにつき最大で%{duration}</strong>まで文字起こしできます'
         - 'WAV、FLAC、MP3、MP4形式に対応しています'
         - '他の形式をご利用する場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください'
       browse: '参照'
       required: '必須'
       optional: '省略可'
-      create: '文字起こしする'
+      create: '文字起こしを開始する'
       modal:
         name: '登録する文字起こしの名前です。何の音声ファイルを登録したのかのメモとしてご利用ください。'
         audio: '文字起こしする音声ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。'
@@ -147,10 +145,10 @@ ja:
             はい、無料で使えます。<br>無料の範囲で、%{duration}までの文字起こしを作成することができます。
             登録した音声ファイルと文字起こし結果の保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。
           - |
-            音声または動画ファイルを選択するだけで使えます。WAV、FLAC、MP3、MP4形式に対応しています。無料版では、1つのファイルで60分までの時間制限があります。
+            音声または動画ファイルを選択するだけで使えます。WAV、FLAC、MP3、MP4形式に対応しています。無料版では、1つのファイルで%{each_duration}までの時間制限があります。
             <a href="#how_to_use">文字起こしAIの使い方</a> には画像付きの詳しい使い方が書かれています。
           - |
-            WAV、FLAC、MP3、MP4形式の音声または動画ファイルをご用意ください。無料版では、1つのファイルで60分までの時間制限があります。
+            WAV、FLAC、MP3、MP4形式の音声または動画ファイルをご用意ください。無料版では、1つのファイルで%{each_duration}までの時間制限があります。
             また、動画ファイルの文字起こしは無料版ではできません。動画ファイルの文字起こしをするには有料版をご利用ください。
           - |
             文字起こしAIは、会議やインタビューの文字起こしに特化した自動AIです。文字起こしは全てAIが自動で行います。
@@ -185,6 +183,11 @@ ja:
         expires_at: '保存期間'
     errors:
       messages:
+        files_count_limited: '登録できるファイル数の上限を超えています。ログインしてください'
+        total_duration_limited: '作成できる合計文字起こし時間の上限を超えています。ログインしてください'
+        file_size_too_large: '無料プランでは、ファイルサイズは %{value}MB より小さい必要があります'
+        invalid_content_type: '音声または動画ファイルを選択してください'
+        duration_too_long: '無料プランでは、音声の長さは %{value}分 より小さい必要があります'
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"

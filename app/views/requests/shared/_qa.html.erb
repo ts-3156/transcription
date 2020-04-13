@@ -4,6 +4,7 @@
 <% translation_options = expiration_kinds.merge(
     price: t('layouts.application.price_per_minute'),
     duration: t('layouts.application.free_duration'),
+    each_duration: t('layouts.application.each_duration'),
     pricing_table: render(partial: 'requests/shared/pricing_table')) %>
 
 <% t('.questions').zip(t('.answers_html', translation_options)).each.with_index do |(question, answer), i| %>

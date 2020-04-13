@@ -74,6 +74,7 @@ class FileField {
     this.$filename_container = null;
     this.$errors_container = $('#model_form_audio_errors');
     this.errors = [];
+    this.duration = null;
 
     var self = this;
     this.$el.on('change', function () {
@@ -82,16 +83,22 @@ class FileField {
       self.$errors_container.empty().hide();
 
       var files = self.files();
-      console.log(files);
+      console.log('File selected', files);
 
-      if (files.length !== 1) {
-        $('#audio_browse_file').show();
-      } else {
+      if (files.length === 1) {
         $('#audio_browse_file').hide();
-        self.$filename_container.text(files[0].name).show();
-        if (!self.validate()) {
-          self.displayErrors();
-        }
+        self.$filename_container.text('ファイルサイズのチェック中です。').show();
+        self.duration = null;
+
+        Util.getDuration((files[0])).then(function (result) {
+          self.duration = result;
+          self.$filename_container.text(files[0].name).show();
+          if (!self.validate()) {
+            self.displayErrors();
+          }
+        });
+      } else {
+        $('#audio_browse_file').show();
       }
     });
   }
@@ -104,10 +111,15 @@ class FileField {
     this.errors = [];
     this.$errors_container.empty().hide();
     var files = this.files();
-    console.log('Start audio valiadtion', files);
+    console.log('Start audio valiadtion', files, 'duration', this.duration);
 
     if (files.length !== 1) {
       this.errors.push('音声または動画ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。');
+      return;
+    }
+
+    if (!this.duration) {
+      this.errors.push('ファイルサイズのチェック中です。1〜10秒ほどお待ちください。');
       return;
     }
 
@@ -121,8 +133,12 @@ class FileField {
       this.errors.push('音声または動画ファイルを選択してください。WAV、FLAC、MP3、MP4形式に対応しています。');
     }
 
-    if (file.size > 120000000) { // 120 MB
-      this.errors.push('120 MBより大きいファイルは有料プランのみ利用できます。');
+    if (file.size > 120_000_000) { // 120 MB
+      this.errors.push('120MB より大きいファイルは有料プランのみ利用できます。');
+    }
+
+    if (this.duration > 3600) { // 1 hour
+      this.errors.push('1時間 より長いファイルは有料プランのみ利用できます。');
     }
 
     return this.errors.length === 0;
@@ -143,6 +159,10 @@ class FileField {
     setTimeout(function () {
       $elem.removeClass('shake');
     }, 500);
+  }
+
+  duration(file) {
+
   }
 }
 
@@ -171,6 +191,28 @@ class Util {
     }
 
     return len;
+  }
+
+  static getDuration(file) {
+    return new Promise(function (resolve) {
+      if (file.type.match(/audio/)) {
+        var audio = document.createElement('audio');
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+          audio.src = e.target.result;
+          audio.addEventListener('loadedmetadata', function () {
+            console.log('duration', parseInt(audio.duration));
+            resolve(audio.duration);
+          }, false);
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        console.log('duration', null);
+        resolve();
+      }
+    });
   }
 }
 

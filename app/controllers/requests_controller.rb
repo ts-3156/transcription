@@ -1,14 +1,18 @@
 class RequestsController < ApplicationController
   before_action :authenticate_user!, only: :show
   before_action :reject_crawler!, only: :create
+
   before_action only: :create do
-    user = current_user_or_guest
-    if user.files_count_limited?
-      flash[:notice] = t('.create.files_count_limited')
-      redirect_to action: :index
-    elsif user.total_duration_limited?
-      flash[:notice] = t('.create.duration_limited')
-      redirect_to action: :index
+    unless (user = current_user_or_guest).valid?
+      flash[:alert] = user.errors.full_messages.to_sentence
+      redirect_to action: :index, anchor: 'created_list'
+    end
+  end
+
+  before_action only: :create do
+    unless (@uploaded_file = UploadedFile.new(params['request']['audio'])).valid?
+      flash[:alert] = @uploaded_file.errors.full_messages.to_sentence
+      redirect_to action: :index, anchor: 'created_list'
     end
   end
 
@@ -31,10 +35,7 @@ class RequestsController < ApplicationController
 
   def create
     @request = Request.new
-
-    # TODO uploaded_file.valid? && @request.valid?
-    uploaded_file = UploadedFile.new(params['request']['audio'])
-    audio = @request.build_audio(filename: uploaded_file.original_filename, codec: uploaded_file.codec, duration: uploaded_file.duration)
+    audio = @request.build_audio(filename: @uploaded_file.original_filename, codec: @uploaded_file.codec, duration: @uploaded_file.duration)
 
     if @request.save
       user = current_user_or_guest(true)
@@ -47,7 +48,7 @@ class RequestsController < ApplicationController
 
       TranscribeAudioWorker.perform_async(@request.id, uploaded_file_path)
       flash[:notice] = t('.successfully_created', name: audio.filename)
-      redirect_to action: :index
+      redirect_to action: :index, anchor: 'created_list'
     else
       # TODO display error message
     end
@@ -66,4 +67,5 @@ class RequestsController < ApplicationController
       Guest.new
     end
   end
+
 end

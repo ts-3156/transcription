@@ -24,7 +24,7 @@
     </div>
     <div class="col">
       <ul class="list-unstyled">
-        <% t('.audio_hints_html').each do |hint| %>
+        <% t('.audio_hints_html', duration: t('layouts.application.each_duration')).each do |hint| %>
           <li>
             <div class="text-muted mb-3" style="font-size: small;">&sdot;<%= hint %></div>
           </li>

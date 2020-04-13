@@ -1,7 +1,11 @@
 class FreeTrial
   class << self
-    def duration
+    def total_duration
       3.hours
+    end
+
+    def each_duration
+      1.hour
     end
   end
 end

@@ -3,9 +3,23 @@ class UploadedFile
 
   attr_reader :raw_file
 
-  # TODO
-  # validates :size, numericality: {less_than: 15000000, message: I18n.t('activemodel.errors.messages.file_size_too_big')}
-  # validates :content_type, inclusion: {in: %w(image/jpeg image/png image/gif), message: I18n.t('activemodel.errors.messages.invalid_content_type')}
+  validate do
+    if size > 120_000_000
+      errors.add(:base, I18n.t('activerecord.errors.messages.file_size_too_large', value: 120))
+    end
+  end
+
+  validate do
+    unless content_type.match?(/audio/)
+      errors.add(:base, I18n.t('activerecord.errors.messages.invalid_content_type'))
+    end
+  end
+
+  validate do
+    if duration > 3600
+      errors.add(:base, I18n.t('activerecord.errors.messages.duration_too_long', value: FreeTrial.each_duration / 1.minute))
+    end
+  end
 
   # raw_file ActionDispatch::Http::UploadedFile
   def initialize(raw_file)

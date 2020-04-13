@@ -16,9 +16,9 @@ module AudiosHelper
 
   def remaining_duration_text(requests, fake:)
     if fake
-      duration = FreeTrial.duration
+      duration = FreeTrial.total_duration
     else
-      duration = FreeTrial.duration - requests.map(&:audio).compact.map(&:duration).sum
+      duration = FreeTrial.total_duration - requests.map(&:audio).compact.map(&:duration).sum
     end
     duration_text(duration)
   end

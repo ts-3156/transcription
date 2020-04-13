@@ -1,6 +1,18 @@
 class Guest < ApplicationRecord
   has_many :requests, as: :requestable
 
+  validate do
+    if files_count_limited?
+      errors.add(:base, I18n.t('activerecord.errors.messages.files_count_limited'))
+    end
+  end
+
+  validate do
+    if total_duration_limited?
+      errors.add(:base, I18n.t('activerecord.errors.messages.total_duration_limited'))
+    end
+  end
+
   def request_creatable?
     requests.size < self.class.files_count_limit
   end
@@ -10,7 +22,7 @@ class Guest < ApplicationRecord
   end
 
   def total_duration_limited?
-    FreeTrial.duration < requests.map { |r| r.audio&.duration }.compact.sum
+    FreeTrial.total_duration < requests.map { |r| r.audio&.duration }.compact.sum
   end
 
   def files_count_limit

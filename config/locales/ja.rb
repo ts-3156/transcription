@@ -12,7 +12,8 @@
                     login: "#{User.expiration_limit(false) / 1.day}日間",
                     paid: "#{User.expiration_limit(true) / 1.year}年間"
                 },
-                free_duration: "#{FreeTrial.duration / 1.hour}時間"
+                free_duration: "#{FreeTrial.total_duration / 1.hour}時間",
+                each_duration: "#{FreeTrial.each_duration / 1.minute}分"
             }
         }
     }

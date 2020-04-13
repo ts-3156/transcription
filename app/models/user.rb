@@ -6,6 +6,18 @@ class User < ApplicationRecord
 
   has_many :requests, as: :requestable
 
+  validate do
+    if files_count_limited?
+      errors.add(:base, I18n.t('activerecord.errors.messages.files_count_limited'))
+    end
+  end
+
+  validate do
+    if total_duration_limited?
+      errors.add(:base, I18n.t('activerecord.errors.messages.total_duration_limited'))
+    end
+  end
+
   def paid?
     # TODO
     false
@@ -21,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def total_duration_limited?
-    !paid? && FreeTrial.duration < requests.map { |r| r.audio&.duration }.compact.sum
+    !paid? && FreeTrial.total_duration < requests.map { |r| r.audio&.duration }.compact.sum
   end
 
   def files_count_limit
