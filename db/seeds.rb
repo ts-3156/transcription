@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = User.create(email: 'admin@example.com', phone: '0312345678', password: 'password')
+user = User.create(email: 'admin@example.com', phone: '0312345678', password: ENV['ADMIN_PASS'])
 
 user.requests.create(name: 'サンプル - 4月10日のインタビュー', created_at: 3.days.ago).tap do |r|
   r.create_audio(filename: 'サンプル - 山田さんインタビュー.mp3', codec: 'mp3', duration: 50.minutes)
