@@ -44,8 +44,8 @@ ExecStart=/usr/local/bin/bundle exec sidekiq -e production -C config/sidekiq.yml
 # at the start of your deploy process.
 ExecReload=/usr/bin/kill -TSTP $MAINPID
 
-User=ec2-user
-Group=ec2-user
+User=terukishinohara
+Group=terukishinohara
 UMask=0002
 
 # Greatly reduce Ruby memory fragmentation and heap usage

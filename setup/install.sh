@@ -52,7 +52,7 @@ sysctl -p
 echo "echo never > /sys/kernel/mm/transparent_hugepage/enabled" >>/etc/rc.local
 
 git clone https://github.com/ts-3156/transcription.git
-chown -R ec2-user:ec2-user transcription
+chown -R terukishinohara:terukishinohara transcription
 # cd transcription
 
 bundle config set path '.bundle'
