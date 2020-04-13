@@ -1,4 +1,4 @@
-<% content_for :title, t('.meta.title') %>
+<% content_for :title, t('.meta.title', price: t('layouts.application.price_per_minute')) %>
 <% content_for :description, t('.meta.description', price: t('layouts.application.price_per_minute'), duration: t('layouts.application.free_duration')) %>
 <%- model_class = Request -%>
 
