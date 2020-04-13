@@ -1,0 +1,70 @@
+<table class="table table-bordered">
+  <thead>
+  <tr class="bg-primary text-white">
+    <th>
+      <%= modal_trigger(target: '#hint_request_audio') do %>
+        <%= model_class.human_attribute_name(:audio) %>
+        &nbsp;
+        <i class="far fa-question-circle"></i>
+      <% end %>
+    </th>
+    <th>
+      <%= modal_trigger(target: '#hint_request_output') do %>
+        <%= model_class.human_attribute_name(:output) %>
+        &nbsp;
+        <i class="far fa-question-circle"></i>
+      <% end %>
+    </th>
+    <th>
+      <%= modal_trigger(target: '#hint_request_created_at') do %>
+        <%= model_class.human_attribute_name(:created_at) %>
+        &nbsp;
+        <i class="far fa-question-circle"></i>
+      <% end %>
+    </th>
+    <th>
+      <%= modal_trigger(target: '#hint_request_expires_at') do %>
+        <%= model_class.human_attribute_name(:expires_at) %>
+        &nbsp;
+        <i class="far fa-question-circle"></i>
+      <% end %>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @requests.each do |request| %>
+    <% audio = request.audio %>
+    <% transcript = request.transcript %>
+    <tr>
+      <td>
+        <% if audio.blob.attached? %>
+          <%= link_to audio.filename, url_for(audio.blob) %> <%= duration_text(audio.duration) %>
+        <% else %>
+          <%= audio.filename %>
+        <% end %>
+      </td>
+      <td>
+        <% if transcript.blob.attached? %>
+          <% collapse_id = "collapse_transcript_summary_#{transcript.id}" %>
+          <div><%= link_to t('.download'), url_for(transcript.blob) %> <%= t('.x_characters', count: transcript.character_count) %></div>
+
+          <div style="font-size: small; overflow: hidden;" class="text-muted">
+            <span><%= transcript.summary.truncate(30, omission: '') %></span>
+            <%= link_to t('.see_more'), "##{collapse_id}", role: 'button', 'aria-expanded' => 'false', data: {toggle: 'collapse'} %>
+          </div>
+
+          <div class="collapse" id="<%= collapse_id %>">
+            <div class="card card-body text-muted">
+              <%= transcript.summary.truncate(1000) %>
+            </div>
+          </div>
+        <% else %>
+          <%= t(".status.#{transcript.status}") %>
+        <% end %>
+      </td>
+      <td><%= l request.created_at.in_time_zone('Tokyo'), format: :short %></td>
+      <td><%= distance_of_time_in_words_to_now((request.created_at + 30.days).in_time_zone('Tokyo')) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

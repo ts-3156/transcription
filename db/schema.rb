@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_114245) do
     t.bigint "request_id"
     t.string "status"
     t.integer "character_count"
-    t.string "summary"
+    t.text "summary"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_at"], name: "index_transcripts_on_created_at"

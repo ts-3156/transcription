@@ -13,10 +13,6 @@ class Guest < ApplicationRecord
     end
   end
 
-  def request_creatable?
-    requests.size < self.class.files_count_limit
-  end
-
   def files_count_limited?
     requests.size >= files_count_limit
   end

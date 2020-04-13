@@ -42,9 +42,9 @@ class RequestsController < ApplicationController
       user.requests << @request
 
       @request.create_transcript(status: 'started')
-      uploaded_file_hash = "#{@request.id}_#{Digest::MD5.hexdigest(uploaded_file.tempfile.read)}"
-      uploaded_file_path = Rails.root.join(ENV['TMP_AUDIO_DIR'], "#{uploaded_file_hash}_#{File.basename(uploaded_file.path)}")
-      FileUtils.mv(uploaded_file.path, uploaded_file_path)
+      uploaded_file_hash = "#{@request.id}_#{Digest::MD5.hexdigest(@uploaded_file.tempfile.read)}"
+      uploaded_file_path = Rails.root.join(ENV['TMP_AUDIO_DIR'], "#{uploaded_file_hash}_#{File.basename(@uploaded_file.path)}")
+      FileUtils.mv(@uploaded_file.path, uploaded_file_path)
 
       TranscribeAudioWorker.perform_async(@request.id, uploaded_file_path)
       flash[:notice] = t('.successfully_created', name: audio.filename)

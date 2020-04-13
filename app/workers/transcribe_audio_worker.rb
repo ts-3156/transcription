@@ -19,8 +19,8 @@ class TranscribeAudioWorker
     text = output['results'].map { |out| out['transcript'] }.join
     length = text.length
 
-    transcript.blob.attach(io: StringIO.new(text), filename: 'output.txt', content_type: 'text/plain')
-    transcript.update(status: 'succeeded', character_count: length, summary: text.truncate(100))
+    transcript.blob.attach(io: StringIO.new(text), filename: I18n.t('activerecord.attributes.transcript.filename'), content_type: 'text/plain')
+    transcript.update(status: 'succeeded', character_count: length, summary: text.truncate(1000))
   rescue => e
     transcript.update(status: 'failed')
     raise

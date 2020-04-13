@@ -12,7 +12,7 @@ class Request < ApplicationRecord
   end
 
   def expired?
-    persisted? && created_at <= user_or_guest.expiration_limit
+    persisted? && created_at <= user_or_guest.expiration_limit.ago
   end
 
   def paid?

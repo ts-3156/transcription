@@ -33,19 +33,12 @@ ja:
         description: |
           文字起こしAIは、会議やインタビューの文字起こしに特化したAIです。AIが文字起こしをするため、会議録・議事録の作成が待ち時間なしで完了します。
           料金は業界最安の%{price}です。最初の%{duration}は無料で利用できます。
-      download: 'ダウンロード'
-      x_characters: '%{count}文字'
       modal:
         name: '登録した文字起こしの名前です。'
         audio: '登録した音声ファイルです。WAV、FLAC、MP3、MP4形式に対応しています。'
         output: '音声ファイルの文字起こし結果です。'
         created_at: '音声ファイルを登録した日時です。'
         expires_at: '登録したファイルと文字起こし結果を保存する期間です。保存期間は、ゲストの場合は%{guest}、ログインしている場合は%{login}、有料プランの場合は%{paid}です。'
-      status:
-        started:  '準備中'
-        in_progress: '文字起こし中'
-        succeeded: '完了'
-        failed: '失敗'
       use_case:
         title: '文字起こしAIの対応シチュエーション'
         desc: |
@@ -109,6 +102,15 @@ ja:
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
     create:
       successfully_created: '%{name} が登録されました。'
+    requests_table:
+      download: 'ダウンロード'
+      x_characters: '%{count}文字'
+      status:
+        started:  '準備中'
+        in_progress: '文字起こし中'
+        succeeded: '完了'
+        failed: '失敗'
+      see_more: '...続きを見る'
     form:
       name_placeholder: '例：第○回国会 衆議院 ○委員会 第○号 の音声'
       name_hints:
@@ -181,6 +183,8 @@ ja:
         output: '変換結果'
         created_at: '登録日時'
         expires_at: '保存期間'
+      transcript:
+        filename: '文字起こし結果.txt'
     errors:
       messages:
         files_count_limited: '登録できるファイル数の上限を超えています。ログインしてください'

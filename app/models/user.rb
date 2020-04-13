@@ -23,11 +23,6 @@ class User < ApplicationRecord
     false
   end
 
-  # TODO Deprecated
-  def request_creatable?
-    requests.size < self.class.files_count_limit(paid?)
-  end
-
   def files_count_limited?
     !paid? && requests.size >= files_count_limit
   end
@@ -45,7 +40,7 @@ class User < ApplicationRecord
   end
 
   def remaining_files_count
-    file_count_limit - requests.size
+    files_count_limit - requests.size
   end
 
   class << self

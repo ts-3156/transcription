@@ -4,7 +4,7 @@ class CreateTranscripts < ActiveRecord::Migration[6.0]
       t.bigint :request_id
       t.string :status
       t.integer :character_count
-      t.string :summary
+      t.text :summary
 
       t.timestamps
 
