@@ -8,5 +8,7 @@ Rails.application.routes.draw do
   }
 
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
+  authenticate :user, lambda { |u| u.id == 1 } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

@@ -65,10 +65,30 @@ yum install -y nodejs yarn
 
 yarn install --check-files
 # Copy config/master.key and .env
-RAILS_ENV=production bundle exec rails db:create db:migrate assets:precompile
+RAILS_ENV=production bundle exec rails db:create db:migrate db:seed assets:precompile
 
 bundle exec rails s -e production
 # RAILS_ENV=production bundle exec pumactl start
 
 cp ./setup/sidekiq.systemd.service /usr/lib/systemd/system/sidekiq.service
 # systemctl start sidekiq
+
+# ffmpeg, ffprobe
+rpm -v --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
+yum install -y ffmpeg ffmpeg-devel
+# ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 [SRC]
+# ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 [SRC]
+
+# sox
+yum remove -y sox
+yum install y gcc-c++ libmad libmad-devel libid3tag libid3tag-devel lame lame-devel flac-devel libvorbis-devel
+wget -O sox-14.4.2.tar.gz https://sourceforge.net/projects/sox/files/sox/14.4.2/sox-14.4.2.tar.gz/download
+tar xvfz sox-14.4.2.tar.gz
+cd sox-14.4.2
+./configure && make && make install
+# sox [SRC] --rate 16k --bits 16 --channels 1 [DST]
+
+# python3
+yum install -y python3 python3-devel
+pip3 install google-cloud-speech
