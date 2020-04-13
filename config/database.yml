@@ -15,7 +15,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  socket: /tmp/mysql.sock
+  socket: <%= ENV.fetch("DATABASE_SOCKET") { '/tmp/mysql.sock' } %>
 
 development:
   <<: *default
@@ -50,5 +50,3 @@ test:
 production:
   <<: *default
   database: transcription_production
-  username: transcription
-  password: <%= ENV['TRANSCRIPTION_DATABASE_PASSWORD'] %>
