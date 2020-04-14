@@ -22,6 +22,9 @@ Rails.application.routes.draw do
     match 'users/sign_out' => 'devise/sessions#destroy', as: 'destroy_user_session', via: [:get, :delete]
   end
 
+  get 'terms_of_service' => 'misc#terms_of_service'
+  get 'privacy_policy' => 'misc#privacy_policy'
+
   require 'sidekiq/web'
   authenticate :user, lambda { |u| u.id == 1 } do
     mount Sidekiq::Web => '/sidekiq'
