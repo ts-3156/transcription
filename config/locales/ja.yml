@@ -18,6 +18,7 @@ ja:
       pricing: 'プラン'
       terms_of_use: '利用規約'
       privacy_policy: 'プライバシーポリシー'
+      inquiry: 'お問い合わせ'
       twitter: 'Twitter'
   requests:
     index:
@@ -98,7 +99,7 @@ ja:
       inquiry:
         title: 'お問い合わせ'
         desc_html: |
-          文字起こしAIについて、質問やご要望は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
+          文字起こしAIについて、質問やご要望は <a href="https://docs.google.com/forms/d/1xHcV_LWhHjScxG4SejCoxz1hN1HslHSaUaK6pq-4UAo" target="_blank">お問い合わせフォーム</a> までお気軽にご連絡ください。
           文字起こしAIのご利用は、%{duration}までは無料です。それ以降は、%{price}でご利用いただけます。
     create:
       successfully_created: '%{name} が登録されました。'
@@ -119,7 +120,7 @@ ja:
       audio_hints_html:
         - '無料版では、<strong>1つのファイルにつき最大で%{duration}</strong>まで文字起こしできます'
         - 'WAV、FLAC、MP3、MP4形式に対応しています'
-        - '他の形式をご利用する場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください'
+        - '他の形式をご利用する場合は <a href="https://docs.google.com/forms/d/1xHcV_LWhHjScxG4SejCoxz1hN1HslHSaUaK6pq-4UAo" target="_blank">お問い合わせフォーム</a> までお気軽にご連絡ください'
       browse: '参照'
       required: '必須'
       optional: '省略可'
@@ -130,7 +131,7 @@ ja:
     shared:
       qa:
         title: 'よくある質問'
-        desc_html: '文字起こしAIについて、よくお問い合わせいただく内容を掲載しています。分からない点や気になる点は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご質問ください。'
+        desc_html: '文字起こしAIについて、よくお問い合わせいただく内容を掲載しています。分からない点や気になる点は <a href="https://docs.google.com/forms/d/1xHcV_LWhHjScxG4SejCoxz1hN1HslHSaUaK6pq-4UAo" target="_blank">お問い合わせフォーム</a> までお気軽にご質問ください。'
         questions:
           - '無料で使えますか？'
           - 'どうやって使えばよいですか？'
@@ -165,7 +166,7 @@ ja:
               <div id="pricing_table" style="position: absolute; margin-top: -100px;"></div>
             </div>
             無料版ですと、無料で%{duration}まで文字起こしを作成できます。有料版になると、%{price}で%{duration}を超えて文字起こしを作成出来るようになります。他にも下記の違いがあります。
-            さらにご質問したい場合は <a href="https://twitter.com/ts_3156" target="_blank">Web担当者</a> までお気軽にご連絡ください。
+            さらにご質問したい場合は <a href="https://docs.google.com/forms/d/1xHcV_LWhHjScxG4SejCoxz1hN1HslHSaUaK6pq-4UAo" target="_blank">お問い合わせフォーム</a> までお気軽にご連絡ください。
             %{pricing_table}
           - |
             まずはじめに <a href="/users/sign_up">ログイン</a> してください。ログインするだけであれば無料版のままです。最初の%{duration}を使い終わると、次に音声またはビデオファイルを登録する時に、
