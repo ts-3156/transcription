@@ -3,9 +3,7 @@ class Form {
     this.$el = $('#resource_form');
     this.fields = [
       new EmailField(),
-      new PhoneField(),
       new PasswordField(),
-      new PasswordConfirmationField(),
     ];
 
     var self = this;
@@ -88,40 +86,6 @@ class EmailField extends Field {
   }
 }
 
-class PhoneField extends Field {
-  constructor() {
-    super();
-    this.$el = $('#resource_phone');
-    this.$errors_container = $('#resource_phone_errors');
-    this.errors = [];
-  }
-
-  validate() {
-    this.errors = [];
-    this.$errors_container.empty().hide();
-    var val = this.$el.val();
-    console.log('Start validation', val);
-
-    val = val.replace(/[０-９]/g, function (s) {
-      return String.fromCharCode(s.charCodeAt(0) - 65248);
-    });
-    val = val.replace(/[-ー]/g, '');
-    console.log('Normalized', val);
-
-    if (!val || val === '') {
-      this.errors.push('有効な電話番号を入力してください。');
-      return;
-    }
-
-    if (!val.match(/^0[0-9]{9,10}$/)) {
-      this.errors.push('有効な電話番号を入力してください。');
-      return;
-    }
-
-    return this.errors.length === 0;
-  }
-}
-
 class PasswordField extends Field {
   constructor() {
     super();
@@ -138,29 +102,6 @@ class PasswordField extends Field {
 
     if (!val || val === '' || val.length < 6) {
       this.errors.push('6文字以上のパスワードを入力してください。');
-    }
-
-    return this.errors.length === 0;
-  }
-}
-
-class PasswordConfirmationField extends Field {
-  constructor() {
-    super();
-    this.$el = $('#resource_password_confirmation');
-    this.$pw = $('#resource_password');
-    this.$errors_container = $('#resource_password_confirmation_errors');
-    this.errors = [];
-  }
-
-  validate() {
-    this.errors = [];
-    this.$errors_container.empty().hide();
-    var val = this.$el.val();
-    console.log('Start validation', '***');
-
-    if (val !== this.$pw.val()) {
-      this.errors.push('パスワード（確認用）とパスワードの入力が一致していません。');
     }
 
     return this.errors.length === 0;

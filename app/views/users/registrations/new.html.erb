@@ -38,7 +38,7 @@
 
             <% if devise_mapping.rememberable? %>
               <div class="custom-control custom-checkbox mb-3">
-                <%= f.check_box :remember_me, class: 'custom-control-input' %>
+                <%= f.check_box :remember_me, class: 'custom-control-input', checked: true %>
                 <%= f.label :remember_me, class: 'custom-control-label' %>
               </div>
             <% end %>

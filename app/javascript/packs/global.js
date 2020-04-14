@@ -22,6 +22,10 @@ $(function () {
 
   // Smooth scrolling when clicking an anchor link
   $('a[href^="#"]').click(function () {
+    if ($(this).attr('href') === '#') {
+      return;
+    }
+
     if ($(this).data('toggle') === 'collapse') {
       return;
     }

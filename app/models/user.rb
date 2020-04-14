@@ -13,7 +13,7 @@ class User < ApplicationRecord
     end
   end
 
-  EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  EMAIL_REGEXP = /\A[\w+\-_.]+@[a-z\d\-_.]+\.[a-z]+\z/i
   validates :email, {presence: true, format: {with: EMAIL_REGEXP}, uniqueness: {case_sensitive: false}}
 
   PHONE_REGEXP = /\A0\d{9,10}\z/i
