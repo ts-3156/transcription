@@ -217,5 +217,5 @@ class Util {
 }
 
 $(function () {
-  window.request_form = new Form();
+  window._form = new Form();
 });

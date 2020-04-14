@@ -177,6 +177,9 @@ ja:
     models:
       request:
     attributes:
+      user:
+        email: 'メールアドレス'
+        phone: '電話番号'
       request:
         name: '名前メモ'
         audio: '音声ファイル'

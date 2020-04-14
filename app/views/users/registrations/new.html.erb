@@ -1,34 +1,39 @@
+<%= javascript_pack_tag 'users/registrations' %>
+
 <%= gradient_header do %>
   <div class="container mt-lg-5">
     <div class="row align-items-lg-center">
 
       <div class="col-lg-6 offset-lg-3">
         <div class="bg-white shadow-sm rounded my-auto p-5">
-          <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-            <%= render "devise/shared/error_messages", resource: resource %>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {id: 'resource_form'}) do |f| %>
 
             <div class="mb-4">
               <h2 class="h4 text-center">無料で新規登録する</h2>
             </div>
 
             <div class="mb-3">
-              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', required: true,
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", id: 'resource_email', class: 'form-control', required: true,
                                 placeholder: "メールアドレス", 'aria-label': "メールアドレス" %>
+              <%= render partial: 'users/shared/error_messages', locals: {resource: resource, key: :email} %>
             </div>
 
             <div class="mb-3">
-              <%= f.phone_field :phone, autocomplete: "phone", class: 'form-control', required: true,
+              <%= f.phone_field :phone, autocomplete: "phone", id: 'resource_phone', class: 'form-control', required: true,
                                 placeholder: "電話番号", 'aria-label': "電話番号" %>
+              <%= render partial: 'users/shared/error_messages', locals: {resource: resource, key: :phone} %>
             </div>
 
             <div class="mb-3">
-              <%= f.password_field :password, autocomplete: "new-password", class: 'form-control', required: true,
+              <%= f.password_field :password, autocomplete: "new-password", id: 'resource_password', class: 'form-control', required: true,
                                    placeholder: "パスワード（#{@minimum_password_length}文字以上）", 'aria-label': "パスワード" %>
+              <%= render partial: 'users/shared/error_messages', locals: {resource: resource, key: :password} %>
             </div>
 
             <div class="mb-3">
-              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control', required: true,
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", id: 'resource_password_confirmation', class: 'form-control', required: true,
                                    placeholder: "パスワード（確認用）", 'aria-label': "パスワード（確認用）" %>
+              <%= render partial: 'users/shared/error_messages', locals: {resource: resource, key: :password_confirmation} %>
             </div>
 
             <% if devise_mapping.rememberable? %>
@@ -38,7 +43,7 @@
               </div>
             <% end %>
 
-            <button type="submit" class="btn btn-block btn-primary">この内容で新規登録する</button>
+            <button type="submit" id="resource_submit" class="btn btn-block btn-primary">この内容で新規登録する</button>
           <% end %>
 
           <div class="mb-3"></div>

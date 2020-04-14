@@ -1,0 +1,13 @@
+<% container_id = "resource_#{key}_errors" %>
+<% if resource.errors.has_key?(key) %>
+  <div id="<%= container_id %>" class="invalid-feedback form-text d-block">
+    <ul>
+      <% resource.errors.full_messages_for(key).each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <div id="<%= container_id %>" class="invalid-feedback form-text">
+  </div>
+<% end %>

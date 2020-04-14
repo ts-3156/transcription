@@ -2,10 +2,22 @@ Rails.application.routes.draw do
   root 'requests#index'
   resources :requests, only: %i(index show create)
 
-  devise_for :users, controllers: {
-      registrations: 'users/registrations',
-      sessions: 'users/sessions'
-  }
+  # https://github.com/heartcombo/devise/wiki/How-To:-Disable-user-from-destroying-their-account
+  devise_for :users, skip: [:registrations, :sessions, :passwords]
+  devise_scope :user do
+    resource :registration,
+             only: [:new, :create],
+             path: 'users',
+             path_names: {new: 'sign_up'},
+             controller: 'users/registrations',
+             as: :user_registration
+    resource :session,
+             only: [:new, :create],
+             path: 'users',
+             path_names: {new: 'sign_in'},
+             controller: 'users/sessions',
+             as: :user_session
+  end
 
   require 'sidekiq/web'
   authenticate :user, lambda { |u| u.id == 1 } do

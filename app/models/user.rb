@@ -6,6 +6,19 @@ class User < ApplicationRecord
 
   has_many :requests, as: :requestable
 
+  before_validation do
+    if phone.present?
+      phone.tr!('０-９-ー', '0-9--')
+      phone.remove!('-')
+    end
+  end
+
+  EMAIL_REGEXP = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, {presence: true, format: {with: EMAIL_REGEXP}, uniqueness: {case_sensitive: false}}
+
+  PHONE_REGEXP = /\A0\d{9,10}\z/i
+  validates :phone, {presence: true, format: {with: PHONE_REGEXP}, uniqueness: {case_sensitive: false}}
+
   validate do
     if files_count_limited?
       errors.add(:base, I18n.t('activerecord.errors.messages.files_count_limited'))
