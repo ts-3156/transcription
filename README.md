@@ -2,4 +2,4 @@
 
 https://transcription-ai.com
 
-![Screenshot](https://ts-3156.github.io/transcription/screenshot.png)
+![Screenshot](https://ts-3156.github.io/transcription/docs/screenshot.png)
