@@ -130,4 +130,4 @@ $(document).ready(function () {
       }
     }
   });
-})
+});

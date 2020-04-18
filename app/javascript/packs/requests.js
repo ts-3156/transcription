@@ -160,10 +160,6 @@ class FileField {
       $elem.removeClass('shake');
     }, 500);
   }
-
-  duration(file) {
-
-  }
 }
 
 class Util {
@@ -182,7 +178,7 @@ class Util {
       if (str[i].match(/[ｦ-ﾟ]+/)) {
         len++;
       } else {
-        if (escape(str[i]).match(/^\%u/)) {
+        if (escape(str[i]).match(/^%u/)) {
           len += 2;
         } else {
           len++;
