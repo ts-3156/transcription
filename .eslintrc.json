@@ -19,8 +19,7 @@
   },
   "globals": {
     "$": true,
-    "Snackbar": true,
-    "JQuery": true
+    "Snackbar": true
   },
   "rules": {
     "semi": "error",
