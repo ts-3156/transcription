@@ -67,7 +67,6 @@ module.exports = function(api) {
           async: false
         }
       ],
-      '@babel/plugin-proposal-numeric-separator'
     ].filter(Boolean)
   }
 }

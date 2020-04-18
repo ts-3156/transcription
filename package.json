@@ -2,7 +2,6 @@
   "name": "transcription",
   "private": true,
   "dependencies": {
-    "@babel/plugin-proposal-numeric-separator": "^7.8.3",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
