@@ -7,7 +7,7 @@ $(function () {
     trigger: "focus"
   });
 
-  var navbarCollapse = function () {
+  const navbarCollapse = function () {
     if ($(".navbar.fixed-top").length === 0) {
       return;
     }
@@ -38,11 +38,8 @@ $(function () {
 });
 
 class SnackMessage {
-  constructor() {
-  }
-
   static show(message) {
-    var options = {
+    const options = {
       actionText: '&times;',
       actionTextColor: '#777',
       backgroundColor: '#eee',

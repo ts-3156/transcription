@@ -1,6 +1,6 @@
 module.exports = {
-  test: /\.js$/,
+  test: /\.(js|ts)$/,
   loader: 'eslint-loader',
   enforce: 'pre',
-  options: {}
+  options: {failOnError: true, failOnWarning: false}
 };

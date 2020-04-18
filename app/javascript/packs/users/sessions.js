@@ -1,52 +1,11 @@
-class Form {
-  constructor() {
-    this.$el = $('#resource_form');
-    this.fields = [
-      new EmailField(),
-      new PasswordField(),
-    ];
-
-    var self = this;
-    $('#resource_submit').on('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (self.validate()) {
-        self.$el[0].submit();
-        return true;
-      } else {
-        self.fields.forEach(function (field) {
-          if (field.errors.length !== 0) {
-            console.warn(field, field.errors);
-            field.displayErrors();
-          }
-        });
-        return false;
-      }
-    });
-  }
-
-  validate() {
-    console.log('Start form validation');
-    var results = [];
-    this.fields.forEach(function (field) {
-      results.push(field.validate());
-    });
-    return results.every(r => r);
-  }
-}
-
 class Field {
-  constructor() {
-  }
-
   displayErrors() {
     if (this.errors.length === 0) {
       this.$errors_container.empty().hide();
     } else {
-      var $ul = $('<ul>');
+      const $ul = $('<ul>');
       this.errors.forEach(function (error) {
-        var $er = $('<li>', {text: error});
+        const $er = $('<li>', {text: error});
         $ul.append($er);
       });
       this.$errors_container.append($ul).show();
@@ -65,7 +24,7 @@ class EmailField extends Field {
   validate() {
     this.errors = [];
     this.$errors_container.empty().hide();
-    var val = this.$el.val();
+    const val = this.$el.val();
     console.log('Start validation', val);
 
     if (!val || val === '') {
@@ -97,7 +56,7 @@ class PasswordField extends Field {
   validate() {
     this.errors = [];
     this.$errors_container.empty().hide();
-    var val = this.$el.val();
+    const val = this.$el.val();
     console.log('Start validation', '***');
 
     if (!val || val === '' || val.length < 6) {
@@ -105,6 +64,44 @@ class PasswordField extends Field {
     }
 
     return this.errors.length === 0;
+  }
+}
+
+class Form {
+  constructor() {
+    this.$el = $('#resource_form');
+    this.fields = [
+      new EmailField(),
+      new PasswordField(),
+    ];
+
+    const self = this;
+    $('#resource_submit').on('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (self.validate()) {
+        self.$el[0].submit();
+        return true;
+      } else {
+        self.fields.forEach(function (field) {
+          if (field.errors.length !== 0) {
+            console.warn(field, field.errors);
+            field.displayErrors();
+          }
+        });
+        return false;
+      }
+    });
+  }
+
+  validate() {
+    console.log('Start form validation');
+    const results = [];
+    this.fields.forEach(function (field) {
+      results.push(field.validate());
+    });
+    return results.every(r => r);
   }
 }
 

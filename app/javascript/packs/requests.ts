@@ -1,49 +1,77 @@
-class Form {
-  $el: JQuery;
-  name: NameField;
-  audio: FileField;
+class Util {
+  static countChars(str) {
+    if (!str) {
+      return -1;
+    }
 
-  constructor() {
-    this.$el = $('#model_form');
-    this.name = new NameField();
-    this.audio = new FileField();
+    let len = 0;
+    str = str.split("");
 
-    var self = this;
-    $('#model_form_submit').on('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      if (self.validate()) {
-        self.$el.trigger('submit');
-        return true;
+    for (let i = 0; i < str.length; i++) {
+      if (str[i].match(/[ｦ-ﾟ]+/)) {
+        len++;
       } else {
-        if (self.name.errors.length !== 0) {
-          console.warn('name', self.name.errors);
-          self.name.displayErrors();
+        if (escape(str[i]).match(/^%u/)) {
+          len += 2;
+        } else {
+          len++;
         }
-        if (self.audio.errors.length !== 0) {
-          console.warn('audio', self.audio.errors);
-          self.audio.displayErrors();
-        }
-        return false;
+      }
+    }
+
+    return len;
+  }
+
+  static getDuration(file) {
+    return new Promise(function (resolve) {
+      if (file.type.match(/audio/)) {
+        const audio = document.createElement('audio');
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          audio.src = e.target.result as string;
+          audio.addEventListener('loadedmetadata', function () {
+            console.log('duration', audio.duration);
+            resolve(audio.duration);
+          }, false);
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        console.log('duration', null);
+        resolve();
       }
     });
   }
-
-  validate() {
-    console.log('Start form validation', this.name, this.audio);
-    var r1 = this.name.validate();
-    var r2 = this.audio.validate();
-    return r1 && r2;
-  }
 }
 
-class NameField {
-  $el: JQuery;
+class Field {
   $errors_container: JQuery;
   errors: string[];
 
+  shake($elem) {
+    $elem.addClass('shake');
+    setTimeout(function () {
+      $elem.removeClass('shake');
+    }, 500);
+  }
+
+  displayErrors() {
+    if (this.errors.length === 0) {
+      this.$errors_container.empty().hide();
+    } else {
+      const message = this.errors.join('<br>');
+      this.$errors_container.html(message).show();
+      this.shake(this.$errors_container);
+    }
+  }
+}
+
+class NameField extends Field {
+  $el: JQuery;
+
   constructor() {
+    super();
     this.$el = $('#model_form_name');
     this.$errors_container = $('#model_form_name_errors');
     this.errors = [];
@@ -56,7 +84,7 @@ class NameField {
   validate() {
     this.errors = [];
     this.$errors_container.empty().hide();
-    var val = this.val();
+    const val = this.val();
     console.log('Start name validation', val);
 
     if (Util.countChars(val) > 50) {
@@ -66,37 +94,28 @@ class NameField {
     return this.errors.length === 0;
   }
 
-  displayErrors() {
-    if (this.errors.length === 0) {
-      this.$errors_container.empty().hide();
-    } else {
-      var message = this.errors.join('<br>');
-      this.$errors_container.html(message).show();
-    }
-  }
 }
 
-class FileField {
+class FileField extends Field {
   $el: JQuery;
   $filename_container: JQuery;
-  $errors_container: JQuery;
-  errors: string[];
   duration: number;
 
   constructor() {
+    super();
     this.$el = $('#model_form_audio');
     this.$filename_container = null;
     this.$errors_container = $('#model_form_audio_errors');
     this.errors = [];
     this.duration = null;
 
-    var self = this;
+    const self = this;
     this.$el.on('change', function () {
       self.$filename_container = $('#audio_filename');
       self.$filename_container.empty().hide();
       self.$errors_container.empty().hide();
 
-      var files = (<HTMLInputElement>self.$el[0]).files;
+      const files = (self.$el[0] as HTMLInputElement).files;
       console.log('File selected', files);
 
       if (files.length === 1) {
@@ -120,7 +139,7 @@ class FileField {
   validate() {
     this.errors = [];
     this.$errors_container.empty().hide();
-    var files = (<HTMLInputElement>this.$el[0]).files;
+    const files = (this.$el[0] as HTMLInputElement).files;
     console.log('Start audio valiadtion', files, 'duration', this.duration);
 
     if (files.length !== 1) {
@@ -133,7 +152,7 @@ class FileField {
       return;
     }
 
-    var file = files[0];
+    const file = files[0];
 
     if (file.type.match(/video/i)) {
       this.errors.push('動画ファイルは有料プランのみ利用できます。');
@@ -153,77 +172,50 @@ class FileField {
 
     return this.errors.length === 0;
   }
-
-  displayErrors() {
-    if (this.errors.length === 0) {
-      this.$errors_container.empty().hide();
-    } else {
-      var message = this.errors.join('<br>');
-      this.$errors_container.html(message).show();
-      this.shake(this.$errors_container);
-    }
-  }
-
-  shake($elem) {
-    $elem.addClass('shake');
-    setTimeout(function () {
-      $elem.removeClass('shake');
-    }, 500);
-  }
 }
 
-class Util {
+class Form {
+  $el: JQuery;
+  name: NameField;
+  audio: FileField;
+
   constructor() {
-  }
+    this.$el = $('#model_form');
+    this.name = new NameField();
+    this.audio = new FileField();
 
-  static countChars(str) {
-    if (!str) {
-      return -1;
-    }
+    const self = this;
+    $('#model_form_submit').on('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    var len = 0;
-    str = str.split("");
-
-    for (var i = 0; i < str.length; i++) {
-      if (str[i].match(/[ｦ-ﾟ]+/)) {
-        len++;
+      if (self.validate()) {
+        self.$el.trigger('submit');
+        return true;
       } else {
-        if (escape(str[i]).match(/^%u/)) {
-          len += 2;
-        } else {
-          len++;
+        if (self.name.errors.length !== 0) {
+          console.warn('name', self.name.errors);
+          self.name.displayErrors();
         }
-      }
-    }
-
-    return len;
-  }
-
-  static getDuration(file) {
-    return new Promise(function (resolve) {
-      if (file.type.match(/audio/)) {
-        var audio = document.createElement('audio');
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-          audio.src = <string>e.target.result;
-          audio.addEventListener('loadedmetadata', function () {
-            console.log('duration', audio.duration);
-            resolve(audio.duration);
-          }, false);
-        };
-
-        reader.readAsDataURL(file);
-      } else {
-        console.log('duration', null);
-        resolve();
+        if (self.audio.errors.length !== 0) {
+          console.warn('audio', self.audio.errors);
+          self.audio.displayErrors();
+        }
+        return false;
       }
     });
+  }
+
+  validate() {
+    console.log('Start form validation', this.name, this.audio);
+    const r1 = this.name.validate();
+    const r2 = this.audio.validate();
+    return r1 && r2;
   }
 }
 
 interface Window {
-  _form: Form
+  _form: Form;
 }
 
 $(function () {
