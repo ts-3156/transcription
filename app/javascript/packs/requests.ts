@@ -1,4 +1,8 @@
 class Form {
+  $el: JQuery;
+  name: NameField;
+  audio: FileField;
+
   constructor() {
     this.$el = $('#model_form');
     this.name = new NameField();
@@ -10,7 +14,7 @@ class Form {
       e.stopPropagation();
 
       if (self.validate()) {
-        self.$el[0].submit();
+        self.$el.trigger('submit');
         return true;
       } else {
         if (self.name.errors.length !== 0) {
@@ -27,7 +31,7 @@ class Form {
   }
 
   validate() {
-    console.log('Start form validation', this.$name, this.$audio);
+    console.log('Start form validation', this.name, this.audio);
     var r1 = this.name.validate();
     var r2 = this.audio.validate();
     return r1 && r2;
@@ -35,6 +39,10 @@ class Form {
 }
 
 class NameField {
+  $el: JQuery;
+  $errors_container: JQuery;
+  errors: string[];
+
   constructor() {
     this.$el = $('#model_form_name');
     this.$errors_container = $('#model_form_name_errors');
@@ -69,6 +77,12 @@ class NameField {
 }
 
 class FileField {
+  $el: JQuery;
+  $filename_container: JQuery;
+  $errors_container: JQuery;
+  errors: string[];
+  duration: number;
+
   constructor() {
     this.$el = $('#model_form_audio');
     this.$filename_container = null;
@@ -82,7 +96,7 @@ class FileField {
       self.$filename_container.empty().hide();
       self.$errors_container.empty().hide();
 
-      var files = self.files();
+      var files = (<HTMLInputElement>self.$el[0]).files;
       console.log('File selected', files);
 
       if (files.length === 1) {
@@ -90,7 +104,7 @@ class FileField {
         self.$filename_container.text('ファイルサイズのチェック中です。').show();
         self.duration = null;
 
-        Util.getDuration((files[0])).then(function (result) {
+        Util.getDuration((files[0])).then(function (result: number) {
           self.duration = result;
           self.$filename_container.text(files[0].name).show();
           if (!self.validate()) {
@@ -103,14 +117,10 @@ class FileField {
     });
   }
 
-  files() {
-    return this.$el[0].files;
-  }
-
   validate() {
     this.errors = [];
     this.$errors_container.empty().hide();
-    var files = this.files();
+    var files = (<HTMLInputElement>this.$el[0]).files;
     console.log('Start audio valiadtion', files, 'duration', this.duration);
 
     if (files.length !== 1) {
@@ -196,9 +206,9 @@ class Util {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-          audio.src = e.target.result;
+          audio.src = <string>e.target.result;
           audio.addEventListener('loadedmetadata', function () {
-            console.log('duration', parseInt(audio.duration));
+            console.log('duration', audio.duration);
             resolve(audio.duration);
           }, false);
         };
@@ -210,6 +220,10 @@ class Util {
       }
     });
   }
+}
+
+interface Window {
+  _form: Form
 }
 
 $(function () {
